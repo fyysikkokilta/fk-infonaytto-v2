@@ -2,8 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Page1 from "./pages/Page1";
 import Page2 from "./pages/Page2";
+import Perjantai from "./pages/Perjantai";
+import Inspirobot from "./pages/Inspirobot";
+import HSLtimetable from "./pages/HSLtimetable";
 
-const pages = [Page1, Page2];
+const pages = [
+  //Page1, 
+  //Page2,
+  Perjantai,
+  Inspirobot,
+  HSLtimetable,
+];
 
 const weight = () => -Math.log(Math.random());
 
