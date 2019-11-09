@@ -1,0 +1,50 @@
+ @import url("https://fonts.googleapis.com/css?family=Candal&display=swap");
+
+.container {
+  position: relative;
+}
+body {
+  overflow:hidden;
+}
+.h1 {
+    position: absolute;
+    left: 10vh;
+    top: 5vh;
+    font-size: 135px;
+    font-family: 'Candal', sans-serif;
+}
+.img {
+    display: block;
+    width: 100vw;
+}
+.child > div {
+  display: inline-block;
+}
+
+.text {
+    font-size: 45px;
+    font-family: 'Candal', sans-serif;
+}
+.table {
+  position:absolute;
+  width: 1300px;
+  left: 10vh;
+  top: 30vh;
+  margin-left: -30px;
+  border-spacing: 30px;
+  table-layout: auto;
+}
+.mask {
+  position: absolute;
+  margin-left: -100vh;
+  margin-top: -230vh;
+  height: 220vh;
+  width: 220vh;
+  border-radius: 50%;
+}
+.td {
+    vertical-align: top;
+}
+.span {
+    white-space: nowrap;
+}

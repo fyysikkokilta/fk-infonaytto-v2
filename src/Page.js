@@ -5,6 +5,8 @@ import Page2 from "./pages/Page2";
 import Perjantai from "./pages/Perjantai";
 import Inspirobot from "./pages/Inspirobot";
 import HSLtimetable from "./pages/HSLtimetable";
+import Wappulaskuri from "./pages/Wappulaskuri";
+import Spotify from "./pages/Spotify";
 
 const pages = [
   //Page1, 
@@ -12,6 +14,8 @@ const pages = [
   Perjantai,
   Inspirobot,
   HSLtimetable,
+  Wappulaskuri,
+  Spotify
 ];
 
 const weight = () => -Math.log(Math.random());

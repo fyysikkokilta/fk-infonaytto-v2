@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css?family=UnifrakturMaguntia");
+
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: url(../images/ullis.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.cover {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: white;
+  opacity: 0.5;
+  z-index: -1000;
+}
+.title {
+  position: relative;
+  font-family: UnifrakturMaguntia;
+  font-size: 230px;
+  -webkit-text-stroke: 3px black;
+  color: #800040;
+  padding-top: 6rem;
+  margin-bottom: 3rem;
+}
+
+.wappu-body {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  position: fixed;
+  /* see https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#title.wappu-text-huge {
+  font-size: 250px;
+  text-align: center;
+  line-height: 100%;
+  width: 80%;
+  margin:0;
+}
+
+.text {
+  font-size: 50px;
+  text-align: center;
+}
+
+.row {
+  /*padding-left: 10%;*/
+  margin-top: 3rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+}
+
+.score {
+  /*width and height of the circle*/
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  font-family: UnifrakturMaguntia;
+}
+
+.display {
+  background: #F3D4F0;
+  border: 3px solid #800040;
+  line-height: 0px;   /*with this line you can control the text inside circle*/
+  padding: 30px 0 0 0;      /*with this line you can control the text inside circle*/
+  /*margin-left: 8% */
+  margin: 0 10px;
+}
+
+.number {
+  font-size: 150px;
+  color: #800040;
+  /*change the position of number*/
+  /* padding: 0 0 0 7px; */
+}
+
+#display_days{
+  /*padding-left: 26px;*/
+}
+
+#display_hours, #display_mins, #display_seconds  {
+  /*padding-left: 42.5px;*/
+}
+
+#days {
+  /*padding-left: 33.5px; */
+}
+
+#hours {
+  /*padding-left: 37px; */
+}
+
+#minutes {
+  /*padding-left: 22px; */
+}
+
+#seconds {
+  /*padding-left: 30px;*/
+}
