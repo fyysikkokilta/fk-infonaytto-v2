@@ -1,0 +1,37 @@
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  /* Background from: https://www.pexels.com/photo/burger-and-vegetables-placed-on-brown-wood-surface-1565982/ */
+  background: url(../images/food.jpg) no-repeat center center fixed;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}
+
+.mask {
+  background: rgba(253, 255, 228, 0.8);
+  border-radius: 1em;
+  padding: 1em;
+  display: inline-block;
+  position: absolute; /*doesn't work with too long menu, namely Dipoli*/
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 1000px;
+  white-space: nowrap;
+}
+
+.h1 {
+  font-size: 90px;
+}
+
+.text {
+  font-size: 42px;
+  line-height: .8em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+
