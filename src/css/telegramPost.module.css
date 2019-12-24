@@ -1,0 +1,13 @@
+.telegramPosts {
+  text-align: center;
+  transform: scale(1.7) translate(-2rem, 9rem);
+}
+.topBar {
+  height: 130px;
+  width:100vw;
+  background: #eeeeee;
+  display:inline-block;
+  text-align: center;
+  padding-top: 3rem;
+  font-size: 70px; 
+}

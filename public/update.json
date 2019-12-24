@@ -1,0 +1,23 @@
+{
+    "fkinfonayttotestlors": {
+        "latest_message_id": 92,
+        "date": 1555099558,
+        "title": "FK infonaytt\u00f6 test l\u00f6rs",
+        "chat_id": -1001180955945,
+        "username": "fkinfonayttotestlors"
+    },
+    "fk_infonaytto": {
+        "latest_message_id": 124,
+        "date": 1555099566,
+        "title": "FK Infon\u00e4ytt\u00f6",
+        "chat_id": -1001273002982,
+        "username": "fk_infonaytto"
+    },
+    "fklors": {
+      "latest_message_id": 200000,
+      "date": 1555099566,
+      "title": "FK L\u00f6rs",
+      "chat_id": -1001273002982,
+      "username": "fkloers"
+    }
+}
