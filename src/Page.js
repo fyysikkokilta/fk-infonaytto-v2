@@ -1,21 +1,24 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Page1 from "./pages/Page1";
-import Page2 from "./pages/Page2";
 import Perjantai from "./pages/Perjantai";
 import Inspirobot from "./pages/Inspirobot";
 import HSLtimetable from "./pages/HSLtimetable";
 import Wappulaskuri from "./pages/Wappulaskuri";
 import Spotify from "./pages/Spotify";
+import Ruokalista from "./pages/Ruokalista";
+import Calendar from "./pages/Calendar"
+import TelegramPost from "./pages/TelegramPosts"
+
 
 const pages = [
-  //Page1, 
-  //Page2,
-  Perjantai,
-  Inspirobot,
-  HSLtimetable,
-  Wappulaskuri,
-  Spotify
+  // Perjantai,
+  // Inspirobot,
+  // HSLtimetable,
+  // Wappulaskuri,
+  // Spotify,
+  // Ruokalista,
+  // Calendar,
+  TelegramPost
 ];
 
 const weight = () => -Math.log(Math.random());
