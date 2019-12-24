@@ -1,5 +1,7 @@
- @import url("https://fonts.googleapis.com/css?family=Candal&display=swap");
-
+ @font-face {
+  font-family: 'Candal';
+  src: local('Candal'), url(../fonts/Candal/Candal-Regular.ttf) format('truetype');
+}
 .container {
   position: relative;
 }
@@ -11,7 +13,7 @@ body {
     left: 10vh;
     top: 5vh;
     font-size: 135px;
-    font-family: 'Candal', sans-serif;
+    font-family: 'Candal';
 }
 .img {
     display: block;
@@ -23,7 +25,7 @@ body {
 
 .text {
     font-size: 45px;
-    font-family: 'Candal', sans-serif;
+    font-family: 'Candal';
 }
 .table {
   position:absolute;
