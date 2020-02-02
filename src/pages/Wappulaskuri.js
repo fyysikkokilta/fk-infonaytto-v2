@@ -28,7 +28,7 @@ export default class Wappulaskuri extends React.Component {
     days: 0,
   };
 
-  static timeout = 3000;
+  static timeout = 20000;
   static priority = 2;
 
   // TODO some clever activity and priority function

@@ -19,7 +19,7 @@ export default class TelegramPost extends React.Component {
     chatUsername: chatUsernames[Math.floor(Math.random() * chatUsernames.length)]
   }
 
-  static timeout = 2000;
+  static timeout = 20000;
   static priority = 2.5;
 
   static isActive() {

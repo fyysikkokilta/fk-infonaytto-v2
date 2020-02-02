@@ -12,8 +12,8 @@ const imageStyle = {
 export default class Inspirobot extends React.Component {
   state = { imageURL: "" };
 
-  static timeout = 20000;
-  static priority = 3;
+  static timeout = 15000;
+  static priority = 0.5;
 
   static isActive() {
     return true;

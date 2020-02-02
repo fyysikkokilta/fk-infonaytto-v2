@@ -70,7 +70,7 @@ const titlesWeighted = [
 ]
 
 export default class HSLtimetable extends React.Component {
-  static timeout = 6000;
+  static timeout = 20000; 
   static priority = 2;
 
   static isActive = () => true;

@@ -2,11 +2,10 @@ import React from "react";
 import perjantai from "../images/perjantai.mp4";
 
 export default class Page1 extends React.Component {
-  static timeout = 6000;
+  static timeout = 10000;
   static priority = 2;
 
-  // TODO add correct active times
-  static isActive = () => true;
+  static isActive = () => new Date().getDay() === 5;
 
   // TODO consider showing this upside down, mirrored, as tiled background...
   render() {

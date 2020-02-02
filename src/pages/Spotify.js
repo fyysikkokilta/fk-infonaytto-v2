@@ -77,7 +77,7 @@ export default class Spotify extends React.Component {
     imageURL: ""
   };
 
-  static timeout = 10000;
+  static timeout = 30000;
   static priority = 3;
 
   static isActive() {
