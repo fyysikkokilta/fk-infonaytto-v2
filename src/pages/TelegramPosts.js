@@ -2,21 +2,23 @@ import React from "react";
 import axios from "axios";
 import styles from "../css/telegramPost.module.css";
 
-// TODO: calibrate times and weights and availabilities
-
 // Same chat names must be telegram-bot/config.py in telegram-bot
 const chatUsernames = ["fk_infonaytto", "fklors"];
-const chatUsername = chatUsernames[Math.floor(Math.random() * chatUsernames.length)];
 
 const Banner = ({ chatName }) => {
   const bannerTexts = {
-    fklors: "Päivän lörinä",
+    fklors: "Fk lörs",
     fk_infonaytto: "Lähetä viestiä! @fk_infonayttobot"
   };
   return <div className={styles.topBar}> {bannerTexts[chatName]} </div>;
 };
 
 export default class TelegramPost extends React.Component {
+  state = {
+    // Must be here to select chat randomly.
+    chatUsername: chatUsernames[Math.floor(Math.random() * chatUsernames.length)]
+  }
+
   static timeout = 2000;
   static priority = 2;
 
@@ -24,10 +26,11 @@ export default class TelegramPost extends React.Component {
     return true;
   }
 
+
   componentDidMount() {
     axios.get("update.json").then(respose => {
-      const messageID = respose.data[chatUsername]["latest_message_id"];
-      const tgpost = chatUsername + "/" + messageID;
+      const messageID = respose.data[this.state.chatUsername]["latest_message_id"];
+      const tgpost = this.state.chatUsername + "/" + messageID;
       const s = document.createElement("script");
       s.type = "text/javascript";
       s.async = true;
@@ -41,7 +44,7 @@ export default class TelegramPost extends React.Component {
   render() {
     return (
       <div>
-        <Banner chatName={chatUsername} />
+        <Banner chatName={this.state.chatUsername} />
         <div id="posts" className={styles.telegramPosts}></div>
       </div>
     );
