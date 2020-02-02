@@ -4,7 +4,6 @@ import styles from "../css/telegramPost.module.css";
 
 // Same chat names must be telegram-bot/config.py in telegram-bot
 const chatUsernames = ["fk_infonaytto", "fklors"];
-const chatUsername = chatUsernames[Math.floor(Math.random() * chatUsernames.length)];
 
 const Banner = ({ chatName }) => {
   const bannerTexts = {
@@ -15,17 +14,23 @@ const Banner = ({ chatName }) => {
 };
 
 export default class TelegramPost extends React.Component {
-  static timeout = 20000;
+  state = {
+    // Must be here to select chat randomly.
+    chatUsername: chatUsernames[Math.floor(Math.random() * chatUsernames.length)]
+  }
+
+  static timeout = 2000;
   static priority = 2.5;
 
   static isActive() {
     return true;
   }
 
+
   componentDidMount() {
     axios.get("update.json").then(respose => {
-      const messageID = respose.data[chatUsername]["latest_message_id"];
-      const tgpost = chatUsername + "/" + messageID;
+      const messageID = respose.data[this.state.chatUsername]["latest_message_id"];
+      const tgpost = this.state.chatUsername + "/" + messageID;
       const s = document.createElement("script");
       s.type = "text/javascript";
       s.async = true;
@@ -39,7 +44,7 @@ export default class TelegramPost extends React.Component {
   render() {
     return (
       <div>
-        <Banner chatName={chatUsername} />
+        <Banner chatName={this.state.chatUsername} />
         <div id="posts" className={styles.telegramPosts}></div>
       </div>
     );
