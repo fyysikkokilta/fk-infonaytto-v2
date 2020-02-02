@@ -11,13 +11,13 @@ import TelegramPost from "./pages/TelegramPosts"
 
 
 const pages = [
-  // Perjantai,
-  // Inspirobot,
-  // HSLtimetable,
-  // Wappulaskuri,
-  // Spotify,
-  // Ruokalista,
-  // Calendar,
+  Perjantai,
+  Inspirobot,
+  HSLtimetable,
+  Wappulaskuri,
+  Spotify,
+  Ruokalista,
+  Calendar,
   TelegramPost
 ];
 
