@@ -2,23 +2,21 @@ import React from "react";
 import axios from "axios";
 import styles from "../css/telegramPost.module.css";
 
-// TODO: calibrate times and weights and availabilities
-
 // Same chat names must be telegram-bot/config.py in telegram-bot
 const chatUsernames = ["fk_infonaytto", "fklors"];
 const chatUsername = chatUsernames[Math.floor(Math.random() * chatUsernames.length)];
 
 const Banner = ({ chatName }) => {
   const bannerTexts = {
-    fklors: "Päivän lörinä",
+    fklors: "Fk lörs",
     fk_infonaytto: "Lähetä viestiä! @fk_infonayttobot"
   };
   return <div className={styles.topBar}> {bannerTexts[chatName]} </div>;
 };
 
 export default class TelegramPost extends React.Component {
-  static timeout = 2000;
-  static priority = 2;
+  static timeout = 20000;
+  static priority = 2.5;
 
   static isActive() {
     return true;
