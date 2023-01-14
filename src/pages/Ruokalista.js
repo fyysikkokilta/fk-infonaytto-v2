@@ -28,15 +28,15 @@ const isOpen = (restaurantID) => {
     case "Täffä":
       return currentHour < 15 && currentDay !== 0 && currentDay !== 6
     case "Alvari":
-      return currentHour < 16 && currentDay !== 0 && currentDay !== 6
+      return (currentHour < 14 || (currentHour === 14 && currentMinute < 30)) && currentDay !== 0 && currentDay !== 6
     case "Kipsari Väre":
-      return currentHour < 18 && currentDay !== 0 && currentDay !== 6
+      return currentHour < 15 && currentDay !== 0 && currentDay !== 6
     case "Studio Kipsari":
       return (currentHour < 14 || (currentHour === 14 && currentMinute < 30)) && currentDay !== 0 && currentDay !== 6
     case "Dipoli":
-      return (currentHour < 19 && currentDay !== 0 && currentDay !== 6) || (currentHour < 16 && (currentDay === 0 || currentDay === 6))
+      return currentHour < 15 && currentDay !== 0 && currentDay !== 6
     case "A Bloc":
-      return (currentHour < 19 && currentDay !== 0 && currentDay !== 6) || (currentHour < 16 && (currentDay === 0 || currentDay === 6))
+      return (currentHour < 18 && currentDay !== 0 && currentDay !== 6) || (currentHour < 16 && currentDay === 6)
     default:
       return false
   }
@@ -105,7 +105,7 @@ export default class Ruokalista extends React.Component {
   componentDidMount() {
     axios
       .get(
-        `https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants=${openRestaurants.join()}&days=${this.state.date}`
+        `https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants=${openRestaurants.join()}&days=${today}`
       )
       .then(respose => {
         this.setState({ menu: respose.data });
