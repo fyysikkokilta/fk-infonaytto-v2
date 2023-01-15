@@ -3,9 +3,9 @@ import React from "react";
 import axios from "axios";
 import styles from "../css/ruokalista.module.css";
 
-// TODO: Kämälista that respects capitalization and 
-
-const today = new Date().toISOString().substring(0, 10);
+// TODO: Kämälista that respects capitalization
+const date = new Date();
+const today = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().substring(0,10);
 const restaurants = {
   1: "Kvarkki",
   5: "Alvari",
