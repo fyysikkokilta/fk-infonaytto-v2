@@ -80,7 +80,7 @@ def update_output_file(msg):
     print(e)
     raise
 
-def send_help_message(bot, update):
+def send_help_message(update, context):
   #NOTE: apply these for all callback functions when python-telegram-bot 0.12 is released:
   # change args from (bot, update) to (update, context)
   # bot = context.bot
@@ -98,9 +98,9 @@ If something is broken or you have feedback, contact the administrator @{}.
 """.format(admin_username, admin_username)
 
   #logger.info(pformat(update.effective_message.to_dict()))
-  bot.send_message(update.effective_message.chat.id, help_message.strip())
+  context.bot.send_message(update.effective_message.chat.id, help_message.strip())
 
-def handle_group_message(bot, update):
+def handle_group_message(update, context):
 
   msg = update.effective_message
   chat = msg.chat
@@ -119,7 +119,7 @@ def handle_group_message(bot, update):
   update_output_file(msg)
 
 
-def handle_private_message(bot, update, user_data):
+def handle_private_message(update, context):
   """
   Ask the user whether to forward their message to the public channel anonymously.
   """
@@ -129,11 +129,11 @@ def handle_private_message(bot, update, user_data):
 
   markup = InlineKeyboardMarkup(keyboard)
 
-  user_data["msg"] = update.effective_message
+  context.user_data["msg"] = update.effective_message
 
   update.message.reply_text("Haluatko lähettää viestin anonyyminä?\nDo you want your message to be anonymous?", reply_markup = markup)
 
-def on_anonymity_choice(bot, update, user_data):
+def on_anonymity_choice(update, context):
   """
   This gets called when the user clicks on the button specifying whether to
   send the message to the public channel as anonymous.
@@ -141,15 +141,16 @@ def on_anonymity_choice(bot, update, user_data):
   """
 
   query = update.callback_query
-  msg = user_data["msg"]
+  msg = context.user_data["msg"]
 
-  del user_data["msg"]
+  del context.user_data["msg"]
 
   #logger.info(query.data)
   #logger.info("type(query.data):" + str(type(query.data)))
   #logger.info(pformat(user_data["msg"].to_dict()))
 
   if int(query.data) == 1:
+    bot = context.bot
 
     # send anonymously, strip data from message
     if msg.text:
@@ -196,8 +197,8 @@ def main():
   dp = updater.dispatcher
   dp.add_handler(CommandHandler("start", send_help_message, filters = Filters.private))
   dp.add_handler(CommandHandler("help", send_help_message, filters = Filters.private))
-  dp.add_handler(MessageHandler(Filters.private, handle_private_message, pass_user_data = True))
-  dp.add_handler(CallbackQueryHandler(on_anonymity_choice, pass_user_data = True))
+  dp.add_handler(MessageHandler(Filters.private, handle_private_message))
+  dp.add_handler(CallbackQueryHandler(on_anonymity_choice))
   #TODO: catch channel messages (possible with python-telegram-bot?)
   dp.add_handler(MessageHandler(Filters.group, handle_group_message))
   dp.add_error_handler(handle_error)
