@@ -6,7 +6,7 @@ See README.md for more details. See also config.py and tgpost.html.
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackQueryHandler, filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackQueryHandler, Filters
 import logging
 import os
 import time
@@ -192,14 +192,14 @@ def main():
   os.chdir(pwd)
 
   # based on echobot2 example
-  updater = Updater(bot_token, [])
+  updater = Updater(bot_token)
   dp = updater.dispatcher
-  dp.add_handler(CommandHandler("start", send_help_message, filters = filters.private))
-  dp.add_handler(CommandHandler("help", send_help_message, filters = filters.private))
-  dp.add_handler(MessageHandler(filters.private, handle_private_message, pass_user_data = True))
+  dp.add_handler(CommandHandler("start", send_help_message, filters = Filters.private))
+  dp.add_handler(CommandHandler("help", send_help_message, filters = Filters.private))
+  dp.add_handler(MessageHandler(Filters.private, handle_private_message, pass_user_data = True))
   dp.add_handler(CallbackQueryHandler(on_anonymity_choice, pass_user_data = True))
   #TODO: catch channel messages (possible with python-telegram-bot?)
-  dp.add_handler(MessageHandler(filters.group, handle_group_message))
+  dp.add_handler(MessageHandler(Filters.group, handle_group_message))
   dp.add_error_handler(handle_error)
 
   updater.start_polling()
