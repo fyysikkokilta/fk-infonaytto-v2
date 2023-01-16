@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build:ui": "del build && cd frontend && npm run build && cp -R build ../build",
+    "build:ui": "rm -f -R build && cd frontend && npm run build && cp -R build ../build",
     "build:uiw": "del build && cd frontend && npm run build && xcopy build ..\\build\\ /e /s /y",
     "deploy": "git push master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
