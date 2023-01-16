@@ -28,7 +28,7 @@ export default class TelegramPost extends React.Component {
 
 
   componentDidMount() {
-    axios.get("update.json").then(respose => {
+    axios.get("/update").then(respose => {
       const messageID = respose.data[this.state.chatUsername]["latest_message_id"];
       const tgpost = this.state.chatUsername + "/" + messageID;
       const s = document.createElement("script");
