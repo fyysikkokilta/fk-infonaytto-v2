@@ -13,7 +13,7 @@ export default class Inspirobot extends React.Component {
   state = { imageURL: "" };
 
   static timeout = 15000;
-  static priority = 0.5;
+  static priority = 1;
 
   static isActive() {
     return true;

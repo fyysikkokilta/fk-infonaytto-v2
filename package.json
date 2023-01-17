@@ -1,41 +1,32 @@
 {
   "name": "fk-infonaytto-v2",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "http://localhost/",
-  "dependencies": {
-    "axios": "^0.19.0",
-    "colorthief": "^2.3.0",
-    "immer": "^5.0.0",
-    "moment": "^2.24.0",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-moment": "^0.9.6",
-    "react-redux": "^7.1.1",
-    "react-scripts": "3.2.0",
-    "redux-actions": "^2.6.5",
-    "redux-logger": "^3.0.6",
-    "redux-saga": "^1.1.1"
-  },
+  "description": "New version of the information display made to solve its [predecessor](https://github.com/fyysikkokilta/fk-infonaytto) problems with maintainability and perfomance. Made with React.",
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build:ui": "rm -f -R build && cd frontend && npm run build && cp -R build ../build",
+    "build:uiw": "del build && cd frontend && npm run build && xcopy build ..\\build\\ /e /s /y",
+    "deploy": "git push master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
+    "prod:deploy": "npm run build:ui && npm run start"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApsiV11/fk-infonaytto-v2.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ApsiV11/fk-infonaytto-v2/issues"
+  },
+  "homepage": "https://github.com/ApsiV11/fk-infonaytto-v2#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }

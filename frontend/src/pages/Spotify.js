@@ -86,7 +86,7 @@ export default class Spotify extends React.Component {
 
   componentDidMount() {
     // From public folder one can read file this way.
-    axios.get("history.json").then(respose => {
+    axios.get("/history").then(respose => {
       this.setState({ spotifyHistory: respose.data });
       this.setState({ imageURL: this.state.spotifyHistory[0].thumbnail });
     });
