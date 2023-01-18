@@ -33,8 +33,8 @@ To make Firefox open automatically on startup, do the following:
 
 To automatically turn of the screen during certain time of day (e.g. between 2 AM and 7:45 AM): `sudo crontab -e` and add the lines
 ```
-0  2 * * * vcgencmd display_power 0
-45 7 * * * vcgencmd display_power 1
+0  2 * * * DISPLAY=:0 xset dpms force off
+45 7 * * * DISPLAY=:0 xset -dpms
 ```
 
 ### Contributing
