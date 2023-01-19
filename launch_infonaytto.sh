@@ -14,4 +14,4 @@ lxterminal --command="tmux new-session -s 'page' 'npm start --prefix $INFONAYTTO
 # Start bot
 lxterminal --command="tmux new-session -s 'bot' 'python3 $INFONAYTTO_FOLDER/telegram-bot/infonayttobot.py'" &
 
-chromium-browser --kiosk http://localhost:3000
+nohup chromium-browser --kiosk --disable-web-security --user-data-dir="~/test" http://localhost:3000 & disown
