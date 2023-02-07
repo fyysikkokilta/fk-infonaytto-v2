@@ -55,7 +55,7 @@ export default class Wappulaskuri extends React.Component {
         <div className={styles.row}>
           <Counter timeUnit={this.state.days} text={"Päivää"}/>
           <Counter timeUnit={this.state.hours} text={"Tuntia"}/>
-          <Counter timeUnit={this.state.minutes} text={"Minuttia"}/>
+          <Counter timeUnit={this.state.minutes} text={"Minuuttia"}/>
           <Counter timeUnit={this.state.seconds} text={"Sekuntia"}/>
         </div>
       </div>
