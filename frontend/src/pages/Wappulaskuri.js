@@ -1,8 +1,10 @@
 import React from "react";
 import moment from "moment";
 import styles from "../css/wappulaskuri.module.css"
+import { apiKeys } from "../apiKeys"
 
 const nextWappu = moment(`${moment().year()}-05-01 00:00:00`);
+const wappuDeclared = apiKeys["wappuDeclared"] || false
 
 if (nextWappu < moment()) {
   nextWappu.add(1, 'year')
@@ -51,7 +53,7 @@ export default class Wappulaskuri extends React.Component {
     return (
       <div className={styles.background}>
         <div className={styles.cover}></div>
-        <h1 className={styles.title}>Aikaa wappuun</h1>
+        <h1 className={wappuDeclared ? styles.title : styles.possibleTitle}>{wappuDeclared ? "Aikaa Wappuun" : "Aikaa Mahdolliseen Wappuun"}</h1>
         <div className={styles.row}>
           <Counter timeUnit={this.state.days} text={"Päivää"}/>
           <Counter timeUnit={this.state.hours} text={"Tuntia"}/>

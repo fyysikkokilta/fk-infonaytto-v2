@@ -29,6 +29,16 @@
   margin-bottom: 3rem;
 }
 
+.possibleTitle {
+  position: relative;
+  font-family: UnifrakturMaguntia;
+  font-size: 150px;
+  -webkit-text-stroke: 3px black;
+  color: #800040;
+  padding-top: 6rem;
+  margin-bottom: 3rem;
+}
+
 .wappu-body {
   top: 0;
   left: 0;
