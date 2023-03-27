@@ -15,6 +15,7 @@ import os
 
 # fill these in
 TARGET_HOST = "infonaytto"
+TARGET_PORT = "5000"
 TARGET_USERNAME = "infonaytto"
 TARGET_FOLDER = "\"~/fk-infonaytto-v2/spotify\"" # remember to add quotes to escape ~
 
@@ -44,7 +45,7 @@ def send_songs():
     filename = "history.json"
     with open(filename, "w") as f:
         f.write(json.dumps(history, sort_keys = True, indent = 4))
-    os.system("scp {} {}@{}:{}".format(filename, TARGET_USERNAME, TARGET_HOST, TARGET_FOLDER))
+    os.system("scp -P {} {} {}@{}:{}".format(TARGET_PORT, filename, TARGET_USERNAME, TARGET_HOST, TARGET_FOLDER))
 
 
 history = []
