@@ -30,7 +30,8 @@ export default class TelegramPost extends React.Component {
   componentDidMount() {
     axios.get("/update").then(respose => {
       const messageID = respose.data[this.state.chatUsername]["latest_message_id"];
-      const tgpost = this.state.chatUsername + "/" + messageID;
+      const percentage = Math.random() * 0.05 + 0.95
+      const tgpost = this.state.chatUsername + "/" + Math.floor(messageID*percentage);
       const s = document.createElement("script");
       s.type = "text/javascript";
       s.async = true;
