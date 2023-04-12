@@ -3,8 +3,8 @@ import axios from "axios";
 
 const imageStyle = {
   'display': 'block',
-  'margin-left': 'auto',
-  'margin-right': 'auto',
+  'marginLeft': 'auto',
+  'marginRight': 'auto',
   'width': '90vh',
   'transform': 'translateY(5%)',   // Vertical align for image
 };
