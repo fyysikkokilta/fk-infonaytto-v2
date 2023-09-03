@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../css/ruokalista.module.css";
 
@@ -15,7 +14,6 @@ const restaurants = {
   51: "Studio Kipsari",
   52: "A Bloc"
 };
-const restaurantIDs = Object.keys(restaurants);
 const timePerFrame = 5;
 
 // Remove item from Fazer menus to make them fit
@@ -63,40 +61,32 @@ const Menu = ({ menu, date }) => {
   );
 };
 
-export default class Ruokalista extends React.Component {
-  state = {
-    menu: [],
-    indexOfRestaurantID: 0
-  };
+export const Ruokalista = ({ showNext }) => {
+  const [menu, setMenu] = useState([]);
+  const [indexOfRestaurantID, setIndexOfRestaurantID] = useState(0);
 
-  static timeout = restaurantIDs.length * timePerFrame * 1000;
-  static priority = 3;
-
-  static isActive() {
-    return restaurants.length !== 0;
-  }
-
-  componentDidMount() {
+  useEffect(() => {
+    let id
     axios.get('open-restaurants').then(response => {
-      this.setState({ menu: response.data });
+      setMenu(response.data);
       setInterval(() => {
-        this.setState({
-          indexOfRestaurantID: (this.state.indexOfRestaurantID + 1) % response.data.length
-        });
+        setIndexOfRestaurantID((indexOfRestaurantID + 1) % response.data.length);
       }, timePerFrame * 1000);
+      id = showNext(response.data.length * timePerFrame * 1000)
     })
-  }
+    return () => clearTimeout(id)
+  }, [])
 
-  render() {
-    const { menu, indexOfRestaurantID } = this.state;
-
-    return (
-      <div className={styles.background}>
-        <Menu
-          menu={menu?.[indexOfRestaurantID]}
-          date={today}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className={styles.background}>
+      <Menu
+        menu={menu?.[indexOfRestaurantID]}
+        date={today}
+      />
+    </div>
+  );
 }
+
+const exportObject = { priority: 3, isActive: () => true, component: Ruokalista }
+
+export default exportObject

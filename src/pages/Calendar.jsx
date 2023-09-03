@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../css/calendar.module.css";
 import { apiKeys } from "../apiKeys"
@@ -68,18 +68,11 @@ const convertYYYYMMDDtoDDMM = timestamp => {
   return `${dd}.${mm}.${yyyy}`
 }
 
-export default class Calendar extends React.Component {
-  state = { data: [], index: 0 };
+const Calendar = ({ showNext }) => {
+  const [data, setData] = useState([]);
+  const [index, setIndex] = useState(0);
 
-
-  static timeout = calendarIDs.length*timePerFrame*1000;
-  static priority = 3;
-
-  static isActive() {
-    return true;
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     calendarIDs.forEach(cid => {
       const url = `https://www.googleapis.com/calendar/v3/calendars/${cid}/events?key=${apiKey}&timeMin=${timeStamp}&singleEvents=true&orderBy=startTime&maxResults=${maxNumberOfEvents}` 
       console.log(url)
@@ -88,32 +81,37 @@ export default class Calendar extends React.Component {
           events: respose.data,
           cid: cid
         }
-        this.setState({
-          data: this.state.data.concat(newData)
-        })
+        setData(currentData => currentData.concat(newData))
       })
     })
-    setInterval(() => {
-      this.setState({
+    const id = setInterval(() => {
+      setIndex(
         // Loop over calendars. Can't take modulo zero cause it is NaN
-        index: (this.state.index + 1) % (this.state.data.length === 0 ? 1 : this.state.data.length)
-      });
+        (index + 1) % (data.length === 0 ? 1 : data.length)
+      );
     }, 1000*timePerFrame );
-  }
+    const id2 = showNext(calendarIDs.length*timePerFrame*1000)
+    return () => {
+      clearInterval(id)
+      clearTimeout(id2)
+    };
+  }, [])
 
-  render() {
-    return (
-      <div className={styles.background}>
-        <div className={styles.topBar}></div>
-        <div className={styles.overlay}>
-          {this.state.data.length === 0
-            ? ""
-            : listEvents(
-                this.state.data[this.state.index].events,
-                this.state.data[this.state.index].cid
-              )}
-        </div>
+  return (
+    <div className={styles.background}>
+      <div className={styles.topBar}></div>
+      <div className={styles.overlay}>
+        {data.length === 0
+          ? ""
+          : listEvents(
+              data[index].events,
+              data[index].cid
+            )}
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+const exportObject = { priority: 3, isActive: () => true, component: Calendar }
+
+export default exportObject

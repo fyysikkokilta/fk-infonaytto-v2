@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const iframeStyle = {
   'position': 'fixed',
@@ -69,17 +69,19 @@ const titlesWeighted = [
   ["Pakkaa veitsesi ja poistu", 0.03]
 ]
 
-export default class HSLtimetable extends React.Component {
-  static timeout = 20000; 
-  static priority = 2;
+export const HSLtimetable = ({ showNext }) => {
 
-  static isActive = () => true;
+  useEffect(() => {
+    const id = showNext(20000)
+    return () => clearTimeout(id)
+  }, [])
+  
+  return (
+  <div>
+    <iframe title="timetable" src={`http://hsl.trapeze.fi/traveller/web?command=fullscreen&id=FyyKiOK&cols=1&extracolumn=platform&offset=240&title=${weighted_choice(titlesWeighted)}`} style={iframeStyle}></iframe>
+  </div>
+)};
 
-  render() {
-    return (
-      <div>
-        <iframe src={ "http://hsl.trapeze.fi/traveller/web?command=fullscreen&id=FyyKiOK&cols=1&extracolumn=platform&offset=240" + "&title=" + weighted_choice(titlesWeighted) } style={iframeStyle}></iframe>
-      </div>
-    );
-  }
-}
+const exportObject = { priority: 2, isActive: () => true, component: HSLtimetable }
+
+export default exportObject

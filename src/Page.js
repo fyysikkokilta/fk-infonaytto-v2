@@ -1,5 +1,4 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 import Perjantai from "./pages/Perjantai";
 import Inspirobot from "./pages/Inspirobot";
 import HSLtimetable from "./pages/HSLtimetable";
@@ -23,15 +22,19 @@ const pages = [
 
 const weight = () => -Math.log(Math.random());
 
-export const selectPage = () => {
+export const selectPage = pages => {
   return pages
     .filter(p => p.isActive())
-    .map(p => ({ page: p, priority: p.priority * weight() }))
-    .reduce((x, p) => (p.priority > x.priority ? p : x)).page;
+    .map((p, index) => ({ index, priority: p.priority * weight() }))
+    .reduce((x, p) => (p.priority > x.priority ? p : x)).index;
 };
 
 export const Page = () => {
-  const SubPage = useSelector(state => state.page.component);
+  const [current, setCurrent] = useState(selectPage(pages));
 
-  return <SubPage />;
+  const showNext = timeout => setTimeout(() => setCurrent(selectPage(pages.filter((page, i) => i !== current))), timeout)
+
+  const CurrentPage = pages[current].component;
+
+  return <CurrentPage showNext={showNext}/>;
 };
