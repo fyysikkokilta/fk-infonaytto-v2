@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import axios from "axios"
 import styles from "../css/telegramPost.module.css"
 import { PageProps } from "../types"
@@ -20,30 +20,29 @@ const Banner = ({ chatName }: { chatName: ChatUserName }) => {
 type Response = Record<ChatUserName, {latest_message_id: number, date: number, title: string, chat_id: number, username: string}>
 
 export const TelegramPost = ({ showNext }: PageProps) => {
-  const [tgPost, setTgPost] = useState<string | null>(null)
   const chatUsername = chatUsernames[Math.floor(Math.random() * chatUsernames.length)] as ChatUserName
 
   useEffect(() => {
     axios.get<Response>("/api/update").then(response => {
       const messageID = response.data[chatUsername]["latest_message_id"]
       const percentage = Math.random() * 0.05 + 0.95
-      setTgPost(chatUsername + "/" + Math.floor(messageID*percentage))
+      const tgpost = chatUsername + "/" + Math.floor(messageID*percentage)
+      const s = document.createElement("script")
+      s.type = "text/javascript"
+      s.async = true
+      s.src = "https://telegram.org/js/telegram-widget.js?7"
+      s.dataset.telegramPost = tgpost
+      s.dataset.width = "900px"
+      document.getElementById("posts")?.appendChild(s)
     })
 
-    const id = showNext(20000)
-    return () => clearTimeout(id)
-  }, [chatUsername])
+    showNext(20000)
+  }, [])
 
   return (
     <div>
       <Banner chatName={chatUsername} />
-      <div id="posts" className={styles.telegramPosts}>
-        {tgPost &&
-          <script type="text/javascript" async={true} src="https://telegram.org/js/telegram-widget.js?7" data-telegramPost={tgPost} data-width="900px">
-
-          </script>
-        }
-      </div>
+      <div id="posts" className={styles.telegramPosts} />
     </div>
   )
 }
