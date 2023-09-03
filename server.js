@@ -28,3 +28,37 @@ app.get("/update", (req, res) => {
     })
 })
 
+app.get("/open-restaurants", (req, res) => {
+    const now = new Date();
+    const today = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().substring(0,10);
+    const restaurantIDs = [1, 5, 3, 45, 50, 51, 52]
+    let currentDay = now.getDay();
+    currentDay = currentDay === 0 ? 6 : currentDay - 1;
+    axios.get(`https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids=${restaurantIDs.join()}&priceCategories=student,studentPremium`)
+      .then(response => {
+        return response.data.filter(restaurant => {
+          const todayOpenings = restaurant.openingHours[currentDay]
+          if(!todayOpenings) return false
+          const [open, close] = todayOpenings.split("-")
+          const [openHour, openMinute] = open.split(":")
+          const [closeHour, closeMinute] = close.split(":")
+          const openTime = new Date()
+          openTime.setHours(openHour)
+          openTime.setMinutes(openMinute)
+          const closeTime = new Date()
+          closeTime.setHours(closeHour)
+          closeTime.setMinutes(closeMinute)
+          return openTime < now && now < closeTime
+        }).map(restaurant => restaurant.id)
+        }).then(openRestaurants => {
+          if(openRestaurants.length === 0) return
+          axios
+            .get(
+              `https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants=${openRestaurants}&days=${today}`
+            )
+            .then(response => {
+                res.set('Content-Type', 'application/json');
+                res.send(Object.entries(response.data)); 
+            });
+        })
+})

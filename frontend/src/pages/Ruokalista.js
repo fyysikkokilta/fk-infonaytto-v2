@@ -28,15 +28,15 @@ const pruneDish = str => {
   );
 };
 
-const listDishes = (menu, restaurantID, date) => {
-  if (menu === "") {
+const listDishes = (menu, date) => {
+  if (!menu) {
     return <p>Ei aukiolevia ravintoloita</p>;
   }
 
-  if (menu[restaurantID]?.hasOwnProperty(date)) {
+  if (menu[1]?.hasOwnProperty(date)) {
     return (
       <div>
-        {menu[restaurantID][date].map((dish, index) =>
+        {menu[1][date].map((dish, index) =>
           pruneDish(dish.title) ? (
             ""
           ) : (
@@ -54,18 +54,18 @@ const listDishes = (menu, restaurantID, date) => {
   }
 };
 
-const Menu = ({ menu, restaurantID, date }) => {
+const Menu = ({ menu, date }) => {
   return (
     <div className={styles.mask}>
-      {menu !== "" && <h1 className={styles.h1}> {restaurants[restaurantID]} </h1>}
-      <div className={styles.text}>{listDishes(menu, restaurantID, date)}</div>
+      {menu && <h1 className={styles.h1}> {restaurants[menu[0]]} </h1>}
+      <div className={styles.text}>{listDishes(menu, date)}</div>
     </div>
   );
 };
 
 export default class Ruokalista extends React.Component {
   state = {
-    menu: "",
+    menu: [],
     indexOfRestaurantID: 0
   };
 
@@ -77,40 +77,14 @@ export default class Ruokalista extends React.Component {
   }
 
   componentDidMount() {
-    const now = new Date();
-    let currentDay = now.getDay();
-    currentDay = currentDay === 0 ? 6 : currentDay - 1;
-    axios.get(`https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids=${restaurantIDs.join()}&priceCategories=student,studentPremium`)
-      .then(response => {
-        return response.data.filter(restaurant => {
-          const todayOpenings = restaurant.openingHours[currentDay]
-          if(!todayOpenings) return false
-          const [open, close] = todayOpenings.split("-")
-          const [openHour, openMinute] = open.split(":")
-          const [closeHour, closeMinute] = close.split(":")
-          const openTime = new Date()
-          openTime.setHours(openHour)
-          openTime.setMinutes(openMinute)
-          const closeTime = new Date()
-          closeTime.setHours(closeHour)
-          closeTime.setMinutes(closeMinute)
-          return openTime < now && now < closeTime
-        }).map(restaurant => restaurant.id)
-        }).then(openRestaurants => {
-          if(openRestaurants.length === 0) return
-          axios
-            .get(
-              `https://kitchen.kanttiinit.fi/menus?lang=fi&restaurants=${openRestaurants}&days=${today}`
-            )
-            .then(response => {
-              this.setState({ menu: response.data });
-              setInterval(() => {
-                this.setState({
-                  indexOfRestaurantID: (this.state.indexOfRestaurantID + 1) % restaurantIDs.length
-                });
-              }, 1000 * timePerFrame);
-            });
-        })
+    axios.get('open-restaurants').then(response => {
+      this.setState({ menu: response.data });
+      setInterval(() => {
+        this.setState({
+          indexOfRestaurantID: (this.state.indexOfRestaurantID + 1) % response.data.length
+        });
+      }, timePerFrame * 1000);
+    })
   }
 
   render() {
@@ -119,8 +93,7 @@ export default class Ruokalista extends React.Component {
     return (
       <div className={styles.background}>
         <Menu
-          menu={menu}
-          restaurantID={restaurantIDs[indexOfRestaurantID]}
+          menu={menu?.[indexOfRestaurantID]}
           date={today}
         />
       </div>
