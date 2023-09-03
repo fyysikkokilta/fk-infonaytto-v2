@@ -7,6 +7,7 @@ import Spotify from "./pages/Spotify"
 import Ruokalista from "./pages/Ruokalista"
 import Calendar from "./pages/Calendar"
 import TelegramPost from "./pages/TelegramPosts"
+import { PageType } from "./types"
 
 
 const pages = [
@@ -18,11 +19,11 @@ const pages = [
   Ruokalista,
   Calendar,
   TelegramPost
-]
+] as PageType[]
 
 const weight = () => -Math.log(Math.random())
 
-export const selectPage = pages => {
+export const selectPage = (pages: PageType[]) => {
   return pages
     .filter(p => p.isActive())
     .map((p, index) => ({ index, priority: p.priority * weight() }))
@@ -32,7 +33,7 @@ export const selectPage = pages => {
 export const Page = () => {
   const [current, setCurrent] = useState(selectPage(pages))
 
-  const showNext = timeout => setTimeout(() => setCurrent(selectPage(pages.filter((page, i) => i !== current))), timeout)
+  const showNext = (timeout: number) => setTimeout(() => setCurrent(selectPage(pages.filter((page, i) => i !== current))), timeout)
 
   const CurrentPage = pages[current].component
 

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
+import { PageProps } from "../types"
 
 const iframeStyle = {
-  'position': 'fixed',
+  'position': 'fixed' as 'fixed',
   'top': 0,
   'left': 0,
   'bottom': 0,
@@ -14,20 +15,22 @@ const iframeStyle = {
 }
 
 // TODO move these functions to another place, maybe rename? (under_score vs camelCase)
-const weighted_idx = (weights) => {
+const weighted_idx = (weights: number[]) => {
   /*
    * Given a list of weights [w0, w1, ...],
    * return the index i with weighted probability wi.
    * The weights don't need to sum to 1, they are just relative weights.
    */
-  var cum_w = [] // cumulative weights
+  var cum_w: number[] = [] // cumulative weights
   // total weight is returned at the end of reduce
   var total_w = weights.reduce(function(prev, next, i) { return cum_w[i] = prev + next }, 0)
   var r = Math.random() * total_w
   return cum_w.findIndex((w) => { return w > r })
 }
 
-const weighted_choice = (pairs, return_index = false) => {
+type Pair = [string, number]
+
+const weighted_choice = (pairs: Pair[], return_index = false) => {
   /*
    * Given a list of pairs [[a0, w0], [a1, w1], ...],
    * randomly select an element ai with probability weighted by wi.
@@ -67,9 +70,9 @@ const titlesWeighted = [
   ["On meillä hauska setä, nyt metrokuskina... 🎵", 0.05],
   ["🚌 🚌  🚌   🚌     🚌          🚌  ", 0.02],
   ["Pakkaa veitsesi ja poistu", 0.03]
-]
+] as Pair[]
 
-export const HSLtimetable = ({ showNext }) => {
+export const HSLtimetable = ({ showNext }: PageProps) => {
 
   useEffect(() => {
     const id = showNext(20000)

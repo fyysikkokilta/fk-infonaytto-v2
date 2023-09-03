@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "../css/telegramPost.module.css"
+import { PageProps } from "../types"
 
 // Same chat names must be telegram-bot/config.py in telegram-bot
 const chatUsernames = ["fk_infonaytto", "fklors"]
 
-const Banner = ({ chatName }) => {
-  const bannerTexts = {
-    fklors: "Fk lörs",
-    fk_infonaytto: "Lähetä viestiä! @fk_infonayttobot"
-  }
+type ChatUserName = keyof typeof bannerTexts
+
+const bannerTexts = {
+  fklors: "Fk lörs",
+  fk_infonaytto: "Lähetä viestiä! @fk_infonayttobot"
+}
+
+const Banner = ({ chatName }: { chatName: ChatUserName }) => {
   return <div className={styles.topBar}> {bannerTexts[chatName]} </div>
 }
 
-export const TelegramPost = ({ showNext }) => {
-  const [tgPost, setTgPost] = useState(null)
-  const chatUsername = chatUsernames[Math.floor(Math.random() * chatUsernames.length)]
+type Response = Record<ChatUserName, {latest_message_id: number, date: number, title: string, chat_id: number, username: string}>
+
+export const TelegramPost = ({ showNext }: PageProps) => {
+  const [tgPost, setTgPost] = useState<string | null>(null)
+  const chatUsername = chatUsernames[Math.floor(Math.random() * chatUsernames.length)] as ChatUserName
 
   useEffect(() => {
-    axios.get("/update").then(response => {
+    axios.get<Response>("/api/update").then(response => {
       const messageID = response.data[chatUsername]["latest_message_id"]
       const percentage = Math.random() * 0.05 + 0.95
       setTgPost(chatUsername + "/" + Math.floor(messageID*percentage))

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "../css/ruokalista.module.css"
+import { PageProps } from "../types"
 
-// TODO: Kämälista that respects capitalization
-const date = new Date()
-const today = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().substring(0,10)
 const restaurants = {
   1: "Kvarkki",
   5: "Alvari",
@@ -14,10 +12,18 @@ const restaurants = {
   51: "Studio Kipsari",
   52: "A Bloc"
 }
+
+type RestaurantId = keyof typeof restaurants
+
+type RestaurantMenu = [RestaurantId, Record<string, { title: string, properties: string[] }[]>]
+
+// TODO: Kämälista that respects capitalization
+const date = new Date()
+const today = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().substring(0,10)
 const timePerFrame = 5
 
 // Remove item from Fazer menus to make them fit
-const pruneDish = str => {
+const pruneDish = (str: string) => {
   return (
     str.includes("Grillistä") ||
     str.includes("Päivän Salaatti") ||
@@ -26,7 +32,7 @@ const pruneDish = str => {
   )
 }
 
-const listDishes = (menu, date) => {
+const listDishes = (menu: RestaurantMenu, date: string) => {
   if (!menu) {
     return <p>Ei aukiolevia ravintoloita</p>
   }
@@ -52,7 +58,7 @@ const listDishes = (menu, date) => {
   }
 }
 
-const Menu = ({ menu, date }) => {
+const Menu = ({ menu, date }: { menu: RestaurantMenu, date: string }) => {
   return (
     <div className={styles.mask}>
       {menu && <h1 className={styles.h1}> {restaurants[menu[0]]} </h1>}
@@ -61,13 +67,13 @@ const Menu = ({ menu, date }) => {
   )
 }
 
-export const Ruokalista = ({ showNext }) => {
+export const Ruokalista = ({ showNext }: PageProps) => {
   const [menu, setMenu] = useState([])
   const [indexOfRestaurantID, setIndexOfRestaurantID] = useState(0)
 
   useEffect(() => {
-    let id
-    axios.get('open-restaurants').then(response => {
+    let id: NodeJS.Timeout
+    axios.get('/api/open-restaurants').then(response => {
       setMenu(response.data)
       setInterval(() => {
         setIndexOfRestaurantID((indexOfRestaurantID + 1) % response.data.length)

@@ -6,4 +6,4 @@ node_modules
 history.json
 update.json
 
-apiKeys.js
+apiKeys.ts

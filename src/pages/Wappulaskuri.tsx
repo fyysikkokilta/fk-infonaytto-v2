@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import moment from "moment"
 import styles from "../css/wappulaskuri.module.css"
 import { apiKeys } from "../apiKeys"
+import { PageProps } from "../types"
 
 const nextWappu = moment(`${moment().year()}-05-01 00:00:00`)
 const wappuDeclared = apiKeys["wappuDeclared"] || false
@@ -10,7 +11,7 @@ if (nextWappu < moment()) {
   nextWappu.add(1, 'year')
 }
 
-const Counter = ({timeUnit, text}) => (
+const Counter = ({timeUnit, text}: { timeUnit: number, text: string }) => (
   <div className={[styles.display, styles.score].join(' ')}>
     <h2 className={styles.number}>{timeUnit}</h2>
     <br />
@@ -18,7 +19,7 @@ const Counter = ({timeUnit, text}) => (
   </div>
 )
 
-export const Wappulaskuri = ({ showNext }) => {
+export const Wappulaskuri = ({ showNext }: PageProps) => {
   const [days, setDays] = useState(0)
   const [hours, setHours] = useState(0)
   const [minutes, setMinutes] = useState(0)

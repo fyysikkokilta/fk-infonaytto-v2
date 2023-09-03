@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
 import perjantai from "../images/perjantai.mp4"
+import { PageProps } from "../types"
 
-export const Perjantai = ({ showNext }) => 
+export const Perjantai = ({ showNext }: PageProps) => 
   // TODO consider showing this upside down, mirrored, as tiled background...
 {
   useEffect(() => {
@@ -14,9 +15,8 @@ export const Perjantai = ({ showNext }) =>
     <video
       autoPlay
       loop
-      alt="perjantai"
       src={perjantai}
-      type="video/mp4"
+      itemType="video/mp4"
       width="100%"
     />
   </div>

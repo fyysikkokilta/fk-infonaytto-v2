@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import { PageProps } from "../types"
 
 const imageStyle = {
   'display': 'block',
@@ -9,7 +10,7 @@ const imageStyle = {
   'transform': 'translateY(5%)',   // Vertical align for image
 }
 
-export const Inspirobot = ({ showNext }) => {
+export const Inspirobot = ({ showNext }: PageProps) => {
   const [imageURL, setImageURL] = useState("")
 
   // Invoced when component is added to DOM. Calls Inspirobot's api to get image src

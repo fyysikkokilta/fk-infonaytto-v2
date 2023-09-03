@@ -1,7 +1,7 @@
-const express = require('express')
-const fs = require('fs')
-const axios = require('axios')
-const path = require('path')
+import { NextFunction, Request, Response } from "express"
+import axios from 'axios'
+import express from 'express'
+import { readFile } from 'fs'
 
 //APP SETUP
 const serverPort = 3010
@@ -9,34 +9,34 @@ const app = express()
 app.listen(serverPort, () => {
 	console.log("Server started on port " + serverPort)
 })
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     next()
 })
-app.use(express.static(path.join(__dirname, 'build')))
+app.use(express.static('build'))
 
-app.get("/history", (req, res) => {
-    fs.readFile('./history.json', 'utf8', (err, data) => {    
+app.get("/api/history", (req: Request, res: Response) => {
+    readFile('./history.json', 'utf8', (err, data) => {    
         res.set('Content-Type', 'application/json')
         res.send(data)
     })
 })
 
-app.get("/update", (req, res) => {
-    fs.readFile('./update.json', 'utf8', (err, data) => {    
+app.get("/api/update", (req: Request, res: Response) => {
+    readFile('./update.json', 'utf8', (err, data) => {    
         res.set('Content-Type', 'application/json')
         res.send(data)
     })
 })
 
-app.get("/open-restaurants", (req, res) => {
+app.get("/api/open-restaurants", (req: Request, res: Response) => {
     const now = new Date()
     const today = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().substring(0,10)
     const restaurantIDs = [1, 5, 3, 45, 50, 51, 52]
     let currentDay = now.getDay()
     currentDay = currentDay === 0 ? 6 : currentDay - 1
-    axios.get(`https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids=${restaurantIDs.join()}&priceCategories=student,studentPremium`)
+    axios.get<{openingHours: string[], id: string}[]>(`https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids=${restaurantIDs.join()}&priceCategories=student,studentPremium`)
       .then(response => {
         return response.data.filter(restaurant => {
           const todayOpenings = restaurant.openingHours[currentDay]
@@ -45,11 +45,11 @@ app.get("/open-restaurants", (req, res) => {
           const [openHour, openMinute] = open.split(":")
           const [closeHour, closeMinute] = close.split(":")
           const openTime = new Date()
-          openTime.setHours(openHour)
-          openTime.setMinutes(openMinute)
+          openTime.setHours(Number(openHour))
+          openTime.setMinutes(Number(openMinute))
           const closeTime = new Date()
-          closeTime.setHours(closeHour)
-          closeTime.setMinutes(closeMinute)
+          closeTime.setHours(Number(closeHour))
+          closeTime.setMinutes(Number(closeMinute))
           return openTime < now && now < closeTime
         }).map(restaurant => restaurant.id)
         }).then(openRestaurants => {

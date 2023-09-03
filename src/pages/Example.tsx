@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { PageProps } from '../types'
 //  Each page exports component that is imported in 
 //  Page.js file. Every component should have two function exported:
 //
@@ -14,7 +15,7 @@ import React, { useEffect } from 'react'
 //  See other pages for examples. Below is a minimal working example of page componend 
 //  that is show on the information display.
 
-const Example = ({ showNext }) => {
+const Example = ({ showNext }: PageProps) => {
     useEffect(() => {
         const id = showNext(3000)
         return () => clearTimeout(id)

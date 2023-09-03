@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "../css/calendar.module.css"
 import { apiKeys } from "../apiKeys"
+import { PageProps } from "../types"
 
 // Parameters for api call
-const apiKey = apiKeys['Google calendar']
+const apiKey = apiKeys['Google calendar'] || ''
 const maxNumberOfEvents = 4
 const timeStamp = new Date().toISOString().substr(0, 10)+'T00:00:00-00:00'
 
@@ -18,10 +19,20 @@ const calendars = {
   //'hjhvblcv9n1ue3tf29j3loqqi4@group.calendar.google.com': 'Kulttuuri',
   //'0orqvov2gidl3m24cnsq4ml1ao@group.calendar.google.com': 'Liikunta',
 }
-const calendarIDs = Object.keys(calendars)
+const calendarIDs = Object.keys(calendars) as (keyof typeof calendars)[]
+
+type CalendarData = {
+  cid: keyof typeof calendars
+  events: {
+    items: {
+      summary: string
+      start: { date: string, dateTime: string }
+    }[]
+  }
+}
 
 // Lists events or indicates there are no events
-const listEvents = (events, cid) => {
+const listEvents = (events: CalendarData['events'], cid: CalendarData['cid']) => {
   if (events?.items) {
     return (
       <div className={styles.events}>
@@ -46,7 +57,7 @@ const listEvents = (events, cid) => {
 }
 
 // Formats start date given by google calendar api in a consistent way
-const dateOfEvent = start => {
+const dateOfEvent = (start: {date: string, dateTime: string}) => {
   const today = `${new Date().getDate()}.${new Date().getMonth()+1}`
   let ret = ''
 
@@ -60,7 +71,7 @@ const dateOfEvent = start => {
 }
 
 // Takes string 'YYYY-MM-DD' and converts it to 'DD.MM'
-const convertYYYYMMDDtoDDMM = timestamp => {
+const convertYYYYMMDDtoDDMM = (timestamp: string) => {
   const [yyyy, mm, dd] = timestamp.split('-')
 
   if (yyyy === `${new Date().getFullYear()}`)
@@ -68,17 +79,17 @@ const convertYYYYMMDDtoDDMM = timestamp => {
   return `${dd}.${mm}.${yyyy}`
 }
 
-const Calendar = ({ showNext }) => {
-  const [data, setData] = useState([])
+const Calendar = ({ showNext }: PageProps) => {
+  const [data, setData] = useState<CalendarData[]>([])
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
     calendarIDs.forEach(cid => {
       const url = `https://www.googleapis.com/calendar/v3/calendars/${cid}/events?key=${apiKey}&timeMin=${timeStamp}&singleEvents=true&orderBy=startTime&maxResults=${maxNumberOfEvents}` 
       console.log(url)
-      axios.get(url).then(respose => {
+      axios.get<{items: { summary: string; start: { date: string, dateTime: string } }[]}>(url).then(response => {
         const newData = {
-          events: respose.data,
+          events: response.data,
           cid: cid
         }
         setData(currentData => currentData.concat(newData))
