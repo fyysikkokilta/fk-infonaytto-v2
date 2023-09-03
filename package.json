@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ApsiV11/fk-infonaytto-v2.git"
+    "url": "git+https://github.com/fyysikkokilta/fk-infonaytto-v2.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ApsiV11/fk-infonaytto-v2/issues"
+    "url": "https://github.com/fyysikkokilta/fk-infonaytto-v2/issues"
   },
   "homepage": "",
   "devDependencies": {
