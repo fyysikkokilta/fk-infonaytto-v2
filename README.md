@@ -11,12 +11,12 @@ Removed features:
 - a bit less lörinä
 
 ### Usage
-Clone repo, install dependencies in root and frontend with `npm install` and make production build with `npm run build:ui`. After that start the server with `npm start` and open http://localhost:3000 in browser.
+Clone repo, install dependencies in root and frontend with `npm install`. After that start the server with `npm deploy` and open http://localhost:3010 in browser.
 
 Some of the content require browser extension to bypass CORS restrictions (for example [Cors Everywhere](https://addons.mozilla.org/fi/firefox/addon/cors-everywhere/)). Future consideration is to provide backend solely with purpose to allow content to be shown without extension.
 
 ### Configuration
-In Page.json define pages that you want to show by commenting out unneeded pages. Create file apiKeys.js in frontend/src where you put your google calendar API key (and other possible keys). Configure telegram-bot/config.py to show telegram content on the screen. Also add symlink from telegram-bot/update.json to update.json. To use Spotify.js create script that updates history.json file for example by using scp. 
+In Page.json define pages that you want to show by commenting out unneeded pages. Create file apiKeys.js in src where you put your google calendar API key (and other possible keys). Configure telegram-bot/config.py to show telegram content on the screen. Also add symlink from telegram-bot/update.json to update.json. To use Spotify.js create script that updates history.json file for example by using scp. 
 
 #### Note about Raspberry Pi configuration
 Install dependencies: `sudo apt install xdotool tmux`

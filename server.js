@@ -1,8 +1,10 @@
 const express = require('express');
 const fs = require('fs');
+const axios = require('axios');
+const path = require('path');
 
 //APP SETUP
-const serverPort = 3000;
+const serverPort = 3010;
 const app = express();
 const server = app.listen(serverPort, () => {
 	console.log("Server started on port " + serverPort)
@@ -12,7 +14,7 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-app.use(express.static('build'));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get("/history", (req, res) => {
     fs.readFile('./history.json', 'utf8', (err, data) => {    
