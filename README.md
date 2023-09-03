@@ -11,7 +11,7 @@ Removed features:
 - a bit less lörinä
 
 ### Usage
-Clone repo, install dependencies in root and frontend with `npm install`. After that start the server with `npm deploy` and open http://localhost:3010 in browser.
+Clone repo, install dependencies in root and frontend with `npm install`. After that start the server with `npm start` and open http://localhost:3010 in browser.
 
 Some of the content require browser extension to bypass CORS restrictions (for example [Cors Everywhere](https://addons.mozilla.org/fi/firefox/addon/cors-everywhere/)). Future consideration is to provide backend solely with purpose to allow content to be shown without extension.
 
@@ -38,4 +38,4 @@ To automatically turn of the screen during certain time of day (e.g. between 2 A
 ```
 
 ### Contributing
-Adding new pages to the infomation display is simple. Just take a look `frontend/src/pages/Example.js` to see how page works. Contact developers if you want to contribute.
+Adding new pages to the infomation display is simple. Just take a look `frontend/src/pages/Example.tsx` to see how page works. Contact developers if you want to contribute.
