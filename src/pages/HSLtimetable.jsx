@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from "react"
 
 const iframeStyle = {
   'position': 'fixed',
@@ -20,11 +20,11 @@ const weighted_idx = (weights) => {
    * return the index i with weighted probability wi.
    * The weights don't need to sum to 1, they are just relative weights.
    */
-  var cum_w = []; // cumulative weights
+  var cum_w = [] // cumulative weights
   // total weight is returned at the end of reduce
-  var total_w = weights.reduce(function(prev, next, i) { return cum_w[i] = prev + next; }, 0);
-  var r = Math.random() * total_w;
-  return cum_w.findIndex((w) => { return w > r; });
+  var total_w = weights.reduce(function(prev, next, i) { return cum_w[i] = prev + next }, 0)
+  var r = Math.random() * total_w
+  return cum_w.findIndex((w) => { return w > r })
 }
 
 const weighted_choice = (pairs, return_index = false) => {
@@ -33,12 +33,12 @@ const weighted_choice = (pairs, return_index = false) => {
    * randomly select an element ai with probability weighted by wi.
    * The weights don't need to sum to 1, they are just relative weights.
    */
-  var weights = pairs.map((x) => { return x[1]; });
-  var i = weighted_idx(weights);
+  var weights = pairs.map((x) => { return x[1] })
+  var i = weighted_idx(weights)
   if(return_index) {
-      return i;
+      return i
   } else {
-      return pairs[i][0];
+      return pairs[i][0]
   }
 }
 
@@ -80,7 +80,7 @@ export const HSLtimetable = ({ showNext }) => {
   <div>
     <iframe title="timetable" src={`http://hsl.trapeze.fi/traveller/web?command=fullscreen&id=FyyKiOK&cols=1&extracolumn=platform&offset=240&title=${weighted_choice(titlesWeighted)}`} style={iframeStyle}></iframe>
   </div>
-)};
+)}
 
 const exportObject = { priority: 2, isActive: () => true, component: HSLtimetable }
 

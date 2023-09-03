@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .js,.jsx",
     "start": "node server.js",
     "dev:server": "nodemon server.js",
     "dev:client": "npm run start:client",
@@ -29,6 +30,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^6.4.0",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
@@ -45,12 +48,6 @@
     "redux-actions": "^3.0.0",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.2.3"
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "react-hooks/exhaustive-deps": "off"
-    }
   },
   "browserslist": {
     "production": [

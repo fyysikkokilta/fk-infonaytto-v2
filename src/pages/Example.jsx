@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 //  Each page exports component that is imported in 
 //  Page.js file. Every component should have two function exported:
 //
@@ -18,7 +18,7 @@ const Example = ({ showNext }) => {
     useEffect(() => {
         const id = showNext(3000)
         return () => clearTimeout(id)
-    }, [showNext]);
+    }, [showNext])
     return <h1>I am page in the information display!</h1>
 }
 

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import styles from "../css/calendar.module.css";
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import styles from "../css/calendar.module.css"
 import { apiKeys } from "../apiKeys"
 
 // Parameters for api call
 const apiKey = apiKeys['Google calendar']
-const maxNumberOfEvents = 4;
-const timeStamp = new Date().toISOString().substr(0, 10)+'T00:00:00-00:00';
+const maxNumberOfEvents = 4
+const timeStamp = new Date().toISOString().substr(0, 10)+'T00:00:00-00:00'
 
-const timePerFrame = 7;
+const timePerFrame = 7
 const calendars = {
   'ahe0vjbi6j16p25rcftgfou5eg@group.calendar.google.com': 'Tapahtumat',
   'ji339ebgiaauv5nk07g41o65q8@group.calendar.google.com': 'Ura ja opinnot',
@@ -17,12 +17,12 @@ const calendars = {
   //'0p9orculc8m8ocnfec11mb6ksk@group.calendar.google.com': 'ISOt',
   //'hjhvblcv9n1ue3tf29j3loqqi4@group.calendar.google.com': 'Kulttuuri',
   //'0orqvov2gidl3m24cnsq4ml1ao@group.calendar.google.com': 'Liikunta',
-};
+}
 const calendarIDs = Object.keys(calendars)
 
 // Lists events or indicates there are no events
 const listEvents = (events, cid) => {
-  if (events.hasOwnProperty('items')) {
+  if (events?.items) {
     return (
       <div className={styles.events}>
         <h1 className={styles.h1}> {calendars[cid]} </h1>
@@ -50,9 +50,9 @@ const dateOfEvent = start => {
   const today = `${new Date().getDate()}.${new Date().getMonth()+1}`
   let ret = ''
 
-  if (start.hasOwnProperty('date')) {
+  if (start?.date) {
     ret += convertYYYYMMDDtoDDMM(start.date)
-  } else if (start.hasOwnProperty('dateTime')) {
+  } else if (start?.dateTime) {
     ret +=convertYYYYMMDDtoDDMM(start.dateTime.substr(0,10))
   }
 
@@ -69,8 +69,8 @@ const convertYYYYMMDDtoDDMM = timestamp => {
 }
 
 const Calendar = ({ showNext }) => {
-  const [data, setData] = useState([]);
-  const [index, setIndex] = useState(0);
+  const [data, setData] = useState([])
+  const [index, setIndex] = useState(0)
 
   useEffect(() => {
     calendarIDs.forEach(cid => {
@@ -88,13 +88,13 @@ const Calendar = ({ showNext }) => {
       setIndex(
         // Loop over calendars. Can't take modulo zero cause it is NaN
         (index + 1) % (data.length === 0 ? 1 : data.length)
-      );
-    }, 1000*timePerFrame );
+      )
+    }, 1000*timePerFrame )
     const id2 = showNext(calendarIDs.length*timePerFrame*1000)
     return () => {
       clearInterval(id)
       clearTimeout(id2)
-    };
+    }
   }, [])
 
   return (
@@ -109,7 +109,7 @@ const Calendar = ({ showNext }) => {
             )}
       </div>
     </div>
-  );
+  )
 }
 
 const exportObject = { priority: 3, isActive: () => true, component: Calendar }

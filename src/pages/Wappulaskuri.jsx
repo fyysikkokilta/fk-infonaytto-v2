@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import moment from "moment";
+import React, { useState, useEffect } from "react"
+import moment from "moment"
 import styles from "../css/wappulaskuri.module.css"
 import { apiKeys } from "../apiKeys"
 
-const nextWappu = moment(`${moment().year()}-05-01 00:00:00`);
+const nextWappu = moment(`${moment().year()}-05-01 00:00:00`)
 const wappuDeclared = apiKeys["wappuDeclared"] || false
 
 if (nextWappu < moment()) {
@@ -19,20 +19,20 @@ const Counter = ({timeUnit, text}) => (
 )
 
 export const Wappulaskuri = ({ showNext }) => {
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+  const [days, setDays] = useState(0)
+  const [hours, setHours] = useState(0)
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
 
   useEffect(() => {
     const id = setInterval(() => {
       const difference = nextWappu.diff(moment(), "seconds")
 
-      setDays(Math.floor(difference / (24 * 60 * 60)));
-      setHours(Math.floor(difference % (24 * 60 * 60) / (60 * 60)));
-      setMinutes(Math.floor(difference % (24 * 60 * 60) % (60 * 60) / 60));
-      setSeconds(difference % (24 * 60 * 60) % (60 * 60) % 60);
-    }, 1000);
+      setDays(Math.floor(difference / (24 * 60 * 60)))
+      setHours(Math.floor(difference % (24 * 60 * 60) / (60 * 60)))
+      setMinutes(Math.floor(difference % (24 * 60 * 60) % (60 * 60) / 60))
+      setSeconds(difference % (24 * 60 * 60) % (60 * 60) % 60)
+    }, 1000)
 
     const id2 = showNext(20000)
     return () => {

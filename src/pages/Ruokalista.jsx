@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import styles from "../css/ruokalista.module.css";
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import styles from "../css/ruokalista.module.css"
 
 // TODO: Kämälista that respects capitalization
-const date = new Date();
-const today = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().substring(0,10);
+const date = new Date()
+const today = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().substring(0,10)
 const restaurants = {
   1: "Kvarkki",
   5: "Alvari",
@@ -13,8 +13,8 @@ const restaurants = {
   50: "Kipsari Väre",
   51: "Studio Kipsari",
   52: "A Bloc"
-};
-const timePerFrame = 5;
+}
+const timePerFrame = 5
 
 // Remove item from Fazer menus to make them fit
 const pruneDish = str => {
@@ -23,18 +23,18 @@ const pruneDish = str => {
     str.includes("Päivän Salaatti") ||
     str.includes("Wicked Rabbit") ||
     str.includes("Jälkiruoka")
-  );
-};
+  )
+}
 
 const listDishes = (menu, date) => {
   if (!menu) {
-    return <p>Ei aukiolevia ravintoloita</p>;
+    return <p>Ei aukiolevia ravintoloita</p>
   }
 
-  if (menu[1]?.hasOwnProperty(date)) {
+  if (menu[1]?.[date]) {
     return (
       <div>
-        {menu[1][date].map((dish, index) =>
+        {menu[1]?.[date].map((dish, index) =>
           pruneDish(dish.title) ? (
             ""
           ) : (
@@ -46,11 +46,11 @@ const listDishes = (menu, date) => {
           )
         )}
       </div>
-    );
+    )
   } else {
-    return <p>Listaa ei saatavilla</p>;
+    return <p>Listaa ei saatavilla</p>
   }
-};
+}
 
 const Menu = ({ menu, date }) => {
   return (
@@ -58,20 +58,20 @@ const Menu = ({ menu, date }) => {
       {menu && <h1 className={styles.h1}> {restaurants[menu[0]]} </h1>}
       <div className={styles.text}>{listDishes(menu, date)}</div>
     </div>
-  );
-};
+  )
+}
 
 export const Ruokalista = ({ showNext }) => {
-  const [menu, setMenu] = useState([]);
-  const [indexOfRestaurantID, setIndexOfRestaurantID] = useState(0);
+  const [menu, setMenu] = useState([])
+  const [indexOfRestaurantID, setIndexOfRestaurantID] = useState(0)
 
   useEffect(() => {
     let id
     axios.get('open-restaurants').then(response => {
-      setMenu(response.data);
+      setMenu(response.data)
       setInterval(() => {
-        setIndexOfRestaurantID((indexOfRestaurantID + 1) % response.data.length);
-      }, timePerFrame * 1000);
+        setIndexOfRestaurantID((indexOfRestaurantID + 1) % response.data.length)
+      }, timePerFrame * 1000)
       id = showNext(response.data.length * timePerFrame * 1000)
     })
     return () => clearTimeout(id)
@@ -84,7 +84,7 @@ export const Ruokalista = ({ showNext }) => {
         date={today}
       />
     </div>
-  );
+  )
 }
 
 const exportObject = { priority: 3, isActive: () => true, component: Ruokalista }

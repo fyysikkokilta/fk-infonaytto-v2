@@ -1,0 +1,7 @@
+{
+    "extends": ["eslint:recommended", "react-app", "prettier"],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off",
+      "semi": ["error", "never"]
+    }
+  }

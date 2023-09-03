@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import perjantai from "../images/perjantai.mp4";
+import React, { useEffect } from "react"
+import perjantai from "../images/perjantai.mp4"
 
 export const Perjantai = ({ showNext }) => 
   // TODO consider showing this upside down, mirrored, as tiled background...

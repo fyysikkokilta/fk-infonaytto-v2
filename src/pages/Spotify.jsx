@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styles from "../css/spotify.module.css";
-import ColorThief from "colorthief";
-import axios from "axios";
+import React, { useState, useEffect } from "react"
+import styles from "../css/spotify.module.css"
+import ColorThief from "colorthief"
+import axios from "axios"
 
 const Table = ({ spotifyHistory }) => (
   <div className={styles.text}>
@@ -10,11 +10,11 @@ const Table = ({ spotifyHistory }) => (
       <tbody>
         {spotifyHistory.map((item, index) => {
           const timeMinutes =
-            (Date.now() / 1000 - parseInt(item.timestamp)) / 60;
+            (Date.now() / 1000 - parseInt(item.timestamp)) / 60
           const [time, timeUnit] =
             timeMinutes > 60
               ? [Math.floor(timeMinutes / 60), "h"]
-              : [Math.floor(timeMinutes), "min"];
+              : [Math.floor(timeMinutes), "min"]
           return (
             <tr key={index}>
               <td className={styles.td}>{item.artist}</td>
@@ -25,7 +25,7 @@ const Table = ({ spotifyHistory }) => (
               </span>
               </td>
             </tr>
-          );
+          )
         })}
       </tbody>
     </table>
@@ -41,31 +41,31 @@ const BackgroundImage = ({ imageURL }) => (
     alt={"Album cover"}
     onLoad={() => {
       // When image has loaded, use colorthief to extract colors from image and set page colors accordingly.
-      const colorThief = new ColorThief();
-      const img = document.getElementById("albumCover");
-      const colors = colorThief.getPalette(img, 2);
+      const colorThief = new ColorThief()
+      const img = document.getElementById("albumCover")
+      const colors = colorThief.getPalette(img, 2)
 
-      const r1 = colors[0][0];
-      const g1 = colors[0][1];
-      const b1 = colors[0][2];
-      const r2 = colors[1][0];
-      const g2 = colors[1][1];
-      const b2 = colors[1][2];
+      const r1 = colors[0][0]
+      const g1 = colors[0][1]
+      const b1 = colors[0][2]
+      const r2 = colors[1][0]
+      const g2 = colors[1][1]
+      const b2 = colors[1][2]
 
-      document.getElementById("h1").style.color = `rgb(${r2},${g2}, ${b2})`;
-      document.getElementById("table").style.color = `rgb(${r2},${g2}, ${b2})`;
-      document.getElementById("mask").style.background = `rgba(${r1},${g1}, ${b1}, 0.87)`;
+      document.getElementById("h1").style.color = `rgb(${r2},${g2}, ${b2})`
+      document.getElementById("table").style.color = `rgb(${r2},${g2}, ${b2})`
+      document.getElementById("mask").style.background = `rgba(${r1},${g1}, ${b1}, 0.87)`
     }}
   />
-);
+)
 
 export const Spotify = ({ showNext }) => {
-  const [spotifyHistory, setSpotifyHistory] = useState([]);
+  const [spotifyHistory, setSpotifyHistory] = useState([])
 
   useEffect(() => {
     axios.get("/history").then(response => {
-      setSpotifyHistory(response.data);
-    });
+      setSpotifyHistory(response.data)
+    })
 
     const id = showNext(30000)
     return () => clearTimeout(id)
@@ -77,7 +77,7 @@ export const Spotify = ({ showNext }) => {
       <div id="mask" className={styles.mask}></div>
       <Table spotifyHistory={spotifyHistory} />
     </div>
-  );
+  )
 }
 
 const exportObject = { priority: 3, isActive: () => true, component: Spotify }
