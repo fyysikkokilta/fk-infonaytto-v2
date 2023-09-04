@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --ext .js,.jsx.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx.ts,.tsx --fix",
-    "start": "npm run build && node build/server.js",
+    "start": "node build/server.js",
     "watch": "nodemon --watch src --exec \"ts-node\" --esm -w server.ts",
     "build:server": "tsc",
     "build:client": "webpack --mode production",
