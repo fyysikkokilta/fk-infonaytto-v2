@@ -19,8 +19,7 @@ export const Inspirobot = ({ showNext }: PageProps) => {
       setImageURL(response.data)
     })
 
-    const id = showNext(15000)
-    return () => clearTimeout(id)
+    showNext(15000)
   }, [])
 
   return (
@@ -34,6 +33,6 @@ export const Inspirobot = ({ showNext }: PageProps) => {
   )
 }
 
-const exportObject = { priority: 1, isActive: () => true, component: Inspirobot }
+const exportObject = { name: 'Inspirobot', priority: 1, isActive: () => true, component: Inspirobot }
 
 export default exportObject

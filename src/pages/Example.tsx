@@ -3,6 +3,7 @@ import { PageProps } from '../types'
 //  Each page exports component that is imported in 
 //  Page.js file. Every component should have two function exported:
 //
+//  - name: name of the page. Used for CSS transition class names.
 //  - priority: how often page tends to show. Accepts any positive real number,
 //    should be interpreted as relative to other priority values
 //  - isActive: indicates whether component should be shown at all.
@@ -16,13 +17,12 @@ import { PageProps } from '../types'
 //  that is show on the information display.
 
 const Example = ({ showNext }: PageProps) => {
-    useEffect(() => {
-        const id = showNext(3000)
-        return () => clearTimeout(id)
-    }, [showNext])
-    return <h1>I am page in the information display!</h1>
+  useEffect(() => {
+    showNext(3000)
+  }, [])
+  return <h1>I am page in the information display!</h1>
 }
 
-const exportObject = { priority: 1, isActive: () => true, component: Example }
+const exportObject = { name: 'Example', priority: 1, isActive: () => true, component: Example }
 
 export default exportObject

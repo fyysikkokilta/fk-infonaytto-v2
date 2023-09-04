@@ -30,7 +30,7 @@ const Table = ({ spotifyHistory }: { spotifyHistory: SpotifyHistory[] }) => (
               <td className={styles.td}>
                 <span className={styles.span}>
                   {time} {timeUnit} ago
-              </span>
+                </span>
               </td>
             </tr>
           )
@@ -75,8 +75,7 @@ export const Spotify = ({ showNext }: PageProps) => {
       setSpotifyHistory(response.data)
     })
 
-    const id = showNext(30000)
-    return () => clearTimeout(id)
+    showNext(30000)
   }, [])
 
   return (
@@ -88,6 +87,6 @@ export const Spotify = ({ showNext }: PageProps) => {
   )
 }
 
-const exportObject = { priority: 3, isActive: () => true, component: Spotify }
+const exportObject = { name: 'Spotify', priority: 3, isActive: () => true, component: Spotify }
 
 export default exportObject

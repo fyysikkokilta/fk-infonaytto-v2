@@ -39,9 +39,9 @@ const weighted_choice = (pairs: Pair[], return_index = false) => {
   var weights = pairs.map((x) => { return x[1] })
   var i = weighted_idx(weights)
   if(return_index) {
-      return i
+    return i
   } else {
-      return pairs[i][0]
+    return pairs[i][0]
   }
 }
 
@@ -75,16 +75,15 @@ const titlesWeighted = [
 export const HSLtimetable = ({ showNext }: PageProps) => {
 
   useEffect(() => {
-    const id = showNext(20000)
-    return () => clearTimeout(id)
+    showNext(20000)
   }, [])
   
   return (
-  <div>
-    <iframe title="timetable" src={`http://hsl.trapeze.fi/traveller/web?command=fullscreen&id=FyyKiOK&cols=1&extracolumn=platform&offset=240&title=${weighted_choice(titlesWeighted)}`} style={iframeStyle}></iframe>
-  </div>
-)}
+    <div>
+      <iframe title="timetable" src={`http://hsl.trapeze.fi/traveller/web?command=fullscreen&id=FyyKiOK&cols=1&extracolumn=platform&offset=240&title=${weighted_choice(titlesWeighted)}`} style={iframeStyle}></iframe>
+    </div>
+  )}
 
-const exportObject = { priority: 2, isActive: () => true, component: HSLtimetable }
+const exportObject = { name: 'HSLtimetable', priority: 2, isActive: () => true, component: HSLtimetable }
 
 export default exportObject

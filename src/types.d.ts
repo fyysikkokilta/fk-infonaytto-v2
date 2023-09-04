@@ -3,6 +3,7 @@ export type PageProps = {
 }
 
 export type PageType = {
+    name: string
     priority: number
     isActive: () => boolean
     component: ({ showNext }: PageProps) => React.JSX.Element

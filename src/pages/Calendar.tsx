@@ -41,13 +41,13 @@ const listEvents = (events: CalendarData['events'], cid: CalendarData['cid']) =>
           ? <h3> Ei tapahtumia </h3>
           :
           <div className={styles.text}>
-          {events['items'].map((event, index) => {
-            return (
-              <div key={index}>
-                <p> {`${dateOfEvent(event.start)} ...... ${event.summary}`} </p>
-              </div>
+            {events['items'].map((event, index) => {
+              return (
+                <div key={index}>
+                  <p> {`${dateOfEvent(event.start)} ...... ${event.summary}`} </p>
+                </div>
+              )}
             )}
-          )}
           </div>
         }
       </div>
@@ -101,11 +101,8 @@ const Calendar = ({ showNext }: PageProps) => {
         (index + 1) % (data.length === 0 ? 1 : data.length)
       )
     }, 1000*timePerFrame )
-    const id2 = showNext(calendarIDs.length*timePerFrame*1000)
-    return () => {
-      clearInterval(id)
-      clearTimeout(id2)
-    }
+    showNext(calendarIDs.length*timePerFrame*1000)
+    return () => clearInterval(id)
   }, [])
 
   return (
@@ -115,14 +112,14 @@ const Calendar = ({ showNext }: PageProps) => {
         {data.length === 0
           ? ""
           : listEvents(
-              data[index].events,
-              data[index].cid
-            )}
+            data[index].events,
+            data[index].cid
+          )}
       </div>
     </div>
   )
 }
 
-const exportObject = { priority: 3, isActive: () => true, component: Calendar }
+const exportObject = { name: 'Calendar', priority: 3, isActive: () => true, component: Calendar }
 
 export default exportObject

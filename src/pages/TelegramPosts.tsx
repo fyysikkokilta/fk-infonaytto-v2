@@ -47,6 +47,6 @@ export const TelegramPost = ({ showNext }: PageProps) => {
   )
 }
 
-const exportObject = { priority: 2.5, isActive: () => true, component: TelegramPost }
+const exportObject = { name: 'TelegramPosts', priority: 2.5, isActive: () => true, component: TelegramPost }
 
 export default exportObject

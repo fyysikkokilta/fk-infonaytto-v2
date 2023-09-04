@@ -72,15 +72,13 @@ export const Ruokalista = ({ showNext }: PageProps) => {
   const [indexOfRestaurantID, setIndexOfRestaurantID] = useState(0)
 
   useEffect(() => {
-    let id: NodeJS.Timeout
     axios.get('/api/open-restaurants').then(response => {
       setMenu(response.data)
       setInterval(() => {
         setIndexOfRestaurantID((indexOfRestaurantID + 1) % response.data.length)
       }, timePerFrame * 1000)
-      id = showNext(response.data.length * timePerFrame * 1000)
+      showNext(Math.max(response.data.length, 1) * timePerFrame * 1000)
     })
-    return () => clearTimeout(id)
   }, [])
 
   return (
@@ -93,6 +91,6 @@ export const Ruokalista = ({ showNext }: PageProps) => {
   )
 }
 
-const exportObject = { priority: 3, isActive: () => true, component: Ruokalista }
+const exportObject = { name: 'Ruokalista', priority: 3, isActive: () => true, component: Ruokalista }
 
 export default exportObject

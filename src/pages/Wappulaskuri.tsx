@@ -35,11 +35,8 @@ export const Wappulaskuri = ({ showNext }: PageProps) => {
       setSeconds(difference % (24 * 60 * 60) % (60 * 60) % 60)
     }, 1000)
 
-    const id2 = showNext(20000)
-    return () => {
-      clearInterval(id)
-      clearTimeout(id2)
-    }
+    showNext(20000)
+    return () => clearInterval(id)
   }, [])
 
   return (
@@ -56,6 +53,6 @@ export const Wappulaskuri = ({ showNext }: PageProps) => {
   )
 }
 
-const exportObject = { priority: 2, isActive: () => true, component: Wappulaskuri }
+const exportObject = { name: 'Wappulaskuri', priority: 2, isActive: () => true, component: Wappulaskuri }
 
 export default exportObject
