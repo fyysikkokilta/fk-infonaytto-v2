@@ -96,7 +96,7 @@ const Calendar = ({ showNext }: PageProps) => {
       })
     })
     const id = setInterval(() => {
-      setIndex(
+      setIndex(index =>
         // Loop over calendars. Can't take modulo zero cause it is NaN
         (index + 1) % (data.length === 0 ? 1 : data.length)
       )
