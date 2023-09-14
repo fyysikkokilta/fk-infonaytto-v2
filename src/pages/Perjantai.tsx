@@ -13,6 +13,7 @@ export const Perjantai = ({ showNext }: PageProps) =>
     <div>
       <video
         autoPlay
+        muted
         loop
         src={perjantai}
         itemType="video/mp4"
