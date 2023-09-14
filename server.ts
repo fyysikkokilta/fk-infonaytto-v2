@@ -46,12 +46,10 @@ app.get("/api/open-restaurants", (req: Request, res: Response) => {
         const [openHour, openMinute] = open.split(":")
         const [closeHour, closeMinute] = close.split(":")
         const openTime = new Date()
-        openTime.setHours(Number(openHour))
-        openTime.setMinutes(Number(openMinute))
+        openTime.setHours(Number(openHour), Number(openMinute))
         const closeTime = new Date()
-        closeTime.setHours(Number(closeHour))
-        closeTime.setMinutes(Number(closeMinute))
-        return openTime < today && today < closeTime
+        closeTime.setHours(Number(closeHour), Number(closeMinute))
+        return openTime < now && now < closeTime
       }).map(restaurant => restaurant.id)
     }).then(openRestaurants => {
       if(openRestaurants.length === 0) return res.send([])
