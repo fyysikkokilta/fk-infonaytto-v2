@@ -84,23 +84,25 @@ const Calendar = ({ showNext }: PageProps) => {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    calendarIDs.forEach(cid => {
+    let id: NodeJS.Timeout
+    Promise.all(calendarIDs.map(cid => {
       const url = `https://www.googleapis.com/calendar/v3/calendars/${cid}/events?key=${apiKey}&timeMin=${timeStamp}&singleEvents=true&orderBy=startTime&maxResults=${maxNumberOfEvents}` 
-      console.log(url)
-      axios.get<{items: { summary: string; start: { date: string, dateTime: string } }[]}>(url).then(response => {
+      return axios.get<{items: { summary: string; start: { date: string, dateTime: string } }[]}>(url).then(response => {
         const newData = {
           events: response.data,
           cid: cid
         }
-        setData(currentData => currentData.concat(newData))
+        return newData
       })
+    })).then(data => {
+      setData(data)
+      id = setInterval(() => {
+        setIndex(index =>
+          // Loop over calendars. Can't take modulo zero cause it is NaN
+          (index + 1) % (data.length === 0 ? 1 : data.length)
+        )
+      }, 1000*timePerFrame )
     })
-    const id = setInterval(() => {
-      setIndex(index =>
-        // Loop over calendars. Can't take modulo zero cause it is NaN
-        (index + 1) % (data.length === 0 ? 1 : data.length)
-      )
-    }, 1000*timePerFrame )
     showNext(calendarIDs.length*timePerFrame*1000)
     return () => clearInterval(id)
   }, [])
