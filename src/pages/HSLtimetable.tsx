@@ -53,6 +53,8 @@ const titlesWeighted = [
   ["π = 3", 0.2],
   ["Otani", 0.2],
   ["Körsbärsvägen", 0.2],
+  ["Viideltä saunaan ja kuudelta putkaan", 0.2],
+  ["Onks sul mitää huomen?", 0.1],
   ["mee töihi", 0.5],
   ["Bussi kulkee vaan", 0.5],
   ["new Bus(True, False)", 0.2],
