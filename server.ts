@@ -31,11 +31,11 @@ app.get("/api/update", (req: Request, res: Response) => {
 })
 
 app.get("/api/open-restaurants", (req: Request, res: Response) => {
-  const now = new Date()
-  const today = new Date(now.getTime() - (now.getTimezoneOffset() * 60000))
-  const todayString = today.toISOString().substring(0,10)
+  const date = new Date()
+  const timeNow = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+  const todayString = timeNow.toISOString().substring(0,10)
   const restaurantIDs = [1, 5, 3, 45, 50, 51, 52]
-  let currentDay = now.getDay()
+  let currentDay = timeNow.getDay()
   currentDay = currentDay === 0 ? 6 : currentDay - 1
   axios.get<{openingHours: string[], id: string}[]>(`https://kitchen.kanttiinit.fi/restaurants?lang=fi&ids=${restaurantIDs.join()}&priceCategories=student,studentPremium`)
     .then(response => {
@@ -45,11 +45,11 @@ app.get("/api/open-restaurants", (req: Request, res: Response) => {
         const [open, close] = todayOpenings.split("-")
         const [openHour, openMinute] = open.split(":")
         const [closeHour, closeMinute] = close.split(":")
-        const openTime = new Date()
-        openTime.setHours(Number(openHour), Number(openMinute))
-        const closeTime = new Date()
-        closeTime.setHours(Number(closeHour), Number(closeMinute))
-        return openTime < now && now < closeTime
+        const openTime = new Date(timeNow.getTime())
+        openTime.setUTCHours(Number(openHour), Number(openMinute), 0, 0)
+        const closeTime = new Date(timeNow.getTime())
+        closeTime.setUTCHours(Number(closeHour), Number(closeMinute), 0, 0)
+        return openTime < timeNow && timeNow < closeTime
       }).map(restaurant => restaurant.id)
     }).then(openRestaurants => {
       if(openRestaurants.length === 0) return res.send([])
