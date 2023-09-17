@@ -4,13 +4,13 @@ import styles from "../css/telegramPost.module.css"
 import { PageProps } from "../types"
 
 // Same chat names must be telegram-bot/config.py in telegram-bot
-const chatUsernames = ["fk_infonaytto", "fklors"]
+const chatUsernames = ["fkinfonaytto", "fklors"]
 
 type ChatUserName = keyof typeof bannerTexts
 
 const bannerTexts = {
   fklors: "Fk lörs",
-  fk_infonaytto: "Lähetä viestiä! @fk_infonayttobot"
+  fkinfonaytto: "Lähetä viestiä! @fk_infonaytto_bot"
 }
 
 const Banner = ({ chatName }: { chatName: ChatUserName }) => {
