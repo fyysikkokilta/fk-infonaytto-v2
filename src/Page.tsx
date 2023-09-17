@@ -7,6 +7,7 @@ import Spotify from "./pages/Spotify"
 import Ruokalista from "./pages/Ruokalista"
 import Calendar from "./pages/Calendar"
 import TelegramPost from "./pages/TelegramPosts"
+import Flickr from "./pages/Flickr"
 import { PageType } from "./types"
 import { motion } from "framer-motion"
 
@@ -18,7 +19,8 @@ const pages = [
   Spotify,
   Ruokalista,
   Calendar,
-  TelegramPost
+  TelegramPost,
+  Flickr
 ] as PageType[]
 
 const weight = () => -Math.log(Math.random())
