@@ -18,6 +18,7 @@ if [[ "$@" == *"--build"* ]]
 then
 	# exit on error (e.g. missing api key etc.)
 	set -e
+	sh shutdown.sh
 	npm install
 	npm run build
 	set +e
