@@ -75,7 +75,7 @@ export const Ruokalista = ({ showNext }: PageProps) => {
     axios.get('/api/open-restaurants').then(response => {
       setMenu(response.data)
       setInterval(() => {
-        setIndexOfRestaurantID((indexOfRestaurantID + 1) % response.data.length)
+        setIndexOfRestaurantID(prev => (prev + 1) % response.data.length)
       }, timePerFrame * 1000)
       showNext(Math.max(response.data.length, 1) * timePerFrame * 1000)
     })
