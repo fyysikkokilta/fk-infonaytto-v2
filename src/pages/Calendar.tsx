@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
 import styles from "../css/calendar.module.css"
 import { apiKeys } from "../apiKeys"
 import { PageProps } from "../types"
@@ -87,9 +86,9 @@ const Calendar = ({ showNext }: PageProps) => {
     let id: NodeJS.Timeout
     Promise.all(calendarIDs.map(cid => {
       const url = `https://www.googleapis.com/calendar/v3/calendars/${cid}/events?key=${apiKey}&timeMin=${timeStamp}&singleEvents=true&orderBy=startTime&maxResults=${maxNumberOfEvents}` 
-      return axios.get<{items: { summary: string; start: { date: string, dateTime: string } }[]}>(url).then(response => {
+      return fetch(url).then(async response => {
         const newData = {
-          events: response.data,
+          events: await response.json() as {items: { summary: string; start: { date: string, dateTime: string } }[]},
           cid: cid
         }
         return newData

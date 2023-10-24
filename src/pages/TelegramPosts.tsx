@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import axios from "axios"
 import styles from "../css/telegramPost.module.css"
 import { PageProps } from "../types"
 
@@ -23,8 +22,9 @@ export const TelegramPost = ({ showNext }: PageProps) => {
   const chatUsername = chatUsernames[Math.floor(Math.random() * chatUsernames.length)] as ChatUserName
 
   useEffect(() => {
-    axios.get<Response>("/api/update").then(response => {
-      const messageID = response.data[chatUsername]["latest_message_id"]
+    fetch("/api/update").then(async response => {
+      const responseJson = await response.json() as Response
+      const messageID = responseJson[chatUsername]["latest_message_id"]
       const percentage = Math.random() * 0.05 + 0.95
       const tgpost = chatUsername + "/" + Math.floor(messageID*percentage)
       const s = document.createElement("script")

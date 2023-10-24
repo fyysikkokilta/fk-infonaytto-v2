@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styles from "../css/spotify.module.css"
 import ColorThief from "colorthief"
-import axios from "axios"
 import { PageProps } from "../types"
 
 type SpotifyHistory = {
@@ -71,8 +70,8 @@ export const Spotify = ({ showNext }: PageProps) => {
   const [spotifyHistory, setSpotifyHistory] = useState<SpotifyHistory[]>([])
 
   useEffect(() => {
-    axios.get<SpotifyHistory[]>("/api/history").then(response => {
-      setSpotifyHistory(response.data)
+    fetch("/api/history").then(async response => {
+      setSpotifyHistory(await response.json())
     })
 
     showNext(30000)

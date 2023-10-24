@@ -19,8 +19,7 @@ then
 	sh shutdown.sh
 	# exit on error (e.g. missing api key etc.)
 	set -e
-	npm install
-	npm run build
+	bun install
 	set +e
 fi
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
 import styles from "../css/ruokalista.module.css"
 import { PageProps } from "../types"
 
@@ -72,12 +71,13 @@ export const Ruokalista = ({ showNext }: PageProps) => {
   const [indexOfRestaurantID, setIndexOfRestaurantID] = useState(0)
 
   useEffect(() => {
-    axios.get('/api/open-restaurants').then(response => {
-      setMenu(response.data)
+    fetch('/api/open-restaurants').then(async response => {
+      const openRestaurants = await response.json()
+      setMenu(openRestaurants)
       setInterval(() => {
-        setIndexOfRestaurantID(prev => (prev + 1) % response.data.length)
+        setIndexOfRestaurantID(prev => (prev + 1) % openRestaurants.length)
       }, timePerFrame * 1000)
-      showNext(Math.max(response.data.length, 1) * timePerFrame * 1000)
+      showNext(Math.max(openRestaurants.length, 1) * timePerFrame * 1000)
     })
   }, [])
 

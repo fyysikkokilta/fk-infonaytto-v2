@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
 import { PageProps } from "../types"
 
 const imageStyle = {
@@ -15,8 +14,8 @@ export const Inspirobot = ({ showNext }: PageProps) => {
 
   // Invoced when component is added to DOM. Calls Inspirobot's api to get image src
   useEffect(() => {
-    axios.get("https://inspirobot.me/api?generate=true").then(response => {
-      setImageURL(response.data)
+    fetch("https://inspirobot.me/api?generate=true").then(async response => {
+      setImageURL(await response.text())
     })
 
     showNext(15000)

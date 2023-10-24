@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from "axios"
 import ColorThief from "colorthief"
 import { apiKeys } from "../apiKeys"
 import styles from "../css/flickr.module.css"
@@ -16,11 +15,11 @@ export const Flickr = ({ showNext }: PageProps) => {
   useEffect(() => {
     void (async () => {
       const flickrUserAddress = `https://www.flickr.com/services/rest/?method=flickr.photosets.getList&api_key=${apiKey}&user_id=${userId}&per_page=${amountOfAlbumsToFetch}&format=json&nojsoncallback=1`
-      const albums = (await axios.get(flickrUserAddress)).data.photosets.photoset
+      const albums = (await (await fetch(flickrUserAddress)).json()).photosets.photoset
       const albumToChoose = Math.round(Math.random()*(albums.length-1))
       const album = albums[albumToChoose]
       const flickrAlbumAddress = `https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=${apiKey}&user_id=${userId}&photoset_id=${album.id}&format=json&nojsoncallback=1`
-      const photos = (await axios.get(flickrAlbumAddress)).data.photoset.photo
+      const photos = (await (await fetch(flickrAlbumAddress)).json()).photoset.photo
       const photoToChoose = Math.round(Math.random()*(photos.length-1))
       const photo = photos[photoToChoose]
       setState({
