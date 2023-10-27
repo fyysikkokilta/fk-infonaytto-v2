@@ -27,9 +27,11 @@ if [[ "$@" == *"--restart"* ]]
 then
 
 	#NOTE: killing chromium makes it think it has crashed, to prevent it from nagging, go to about:config and set toolkit.startup.max_resumed_crashes to -1
+ 	set -e
 	tmux kill-session -t page
 	tmux kill-session -t bot
 	killall chromium-browser
+ 	set +e
 
 	DISPLAY=:0 sh launch_infonaytto.sh
 
