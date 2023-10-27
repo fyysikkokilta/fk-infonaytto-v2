@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Start the infonaytto html file in firefox and set it to full screen.
 # To run this script on GUI login, add the following line (without # (but with @) and with the correct path) to ~/.config/lxsession/LXDE-pi/autostart
 #@sh /home/infonaytto/infonaytto/launch_infonaytto.sh
