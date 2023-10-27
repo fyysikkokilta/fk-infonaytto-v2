@@ -16,7 +16,6 @@ fi
 
 if [[ "$@" == *"--build"* ]]
 then
-	sh shutdown.sh
 	# exit on error (e.g. missing api key etc.)
 	set -e
 	bun install
