@@ -11,7 +11,7 @@ export DISPLAY=:0
 INFONAYTTO_FOLDER=~/fk-infonaytto-v2
 #TODO: implement this: https://stackoverflow.com/questions/50988416/stop-tmux-detached-session-closing-when-command-finishes
 # Serve infonaytto page
-lxterminal --command="tmux new-session -s 'page' '~/.bun/bin/bun run $INFONAYTTO_FOLDER/server.ts'" &
+lxterminal --command="tmux new-session -s 'page' '/home/infonaytto/.bun/bin/bun run $INFONAYTTO_FOLDER/server.ts'" &
 
 # Start bot
 lxterminal --command="tmux new-session -s 'bot' 'python3 $INFONAYTTO_FOLDER/telegram-bot/infonayttobot.py'" &
