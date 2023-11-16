@@ -9,7 +9,6 @@ import Calendar from "./pages/Calendar"
 import TelegramPost from "./pages/TelegramPosts"
 import Flickr from "./pages/Flickr"
 import { PageType } from "./types"
-import { motion } from "framer-motion"
 
 const pages = [
   Perjantai,
@@ -44,12 +43,6 @@ export const Page = () => {
   const CurrentPage = currentPage.component
 
   return (
-    <motion.div key={current} 
-      initial={{ x: '-100%', height: '100%' }}
-      animate={{ x: 0, height: '100%' }}
-      exit={{ x: '-100%', height: '100%' }}
-      transition={{ duration: 0.5 }}>
-      <CurrentPage key={current} showNext={showNext}/>
-    </motion.div>
+    <CurrentPage key={current} showNext={showNext}/>
   )
 }
