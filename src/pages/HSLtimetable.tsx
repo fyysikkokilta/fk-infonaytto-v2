@@ -30,7 +30,7 @@ const weighted_idx = (weights: number[]) => {
 
 type Pair = [string, number]
 
-const weighted_choice = (pairs: Pair[], return_index = false) => {
+const weighted_choice = (pairs: Pair[]) => {
   /*
    * Given a list of pairs [[a0, w0], [a1, w1], ...],
    * randomly select an element ai with probability weighted by wi.
@@ -38,11 +38,7 @@ const weighted_choice = (pairs: Pair[], return_index = false) => {
    */
   var weights = pairs.map((x) => { return x[1] })
   var i = weighted_idx(weights)
-  if(return_index) {
-    return i
-  } else {
-    return pairs[i][0]
-  }
+  return pairs[i][0]
 }
 
 const titlesWeighted = [
@@ -82,7 +78,10 @@ export const HSLtimetable = ({ showNext }: PageProps) => {
   
   return (
     <div>
-      <iframe title="timetable" src={`http://hsl.trapeze.fi/traveller/web?command=fullscreen&id=FyyKiOK&cols=1&extracolumn=platform&offset=240&title=${weighted_choice(titlesWeighted)}`} style={iframeStyle}></iframe>
+      <div style={{zIndex: 10, position: "absolute", width: "100%", top: "2.5%"}}>
+        <h1 style={{textAlign: "center", color: "white", fontSize: "4em"}} id="timetable-title">{weighted_choice(titlesWeighted)}</h1>
+      </div>
+      <iframe title="timetable" src={`https://omatnaytot.hsl.fi/static/?&url=0d1ccfd0-6993-571b-ab56-05be3c93f460`} style={iframeStyle}></iframe>
     </div>
   )}
 
