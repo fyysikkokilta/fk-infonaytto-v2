@@ -70,6 +70,6 @@ export const Flickr = ({ showNext }: PageProps) => {
   )
 }
 
-const exportObject = { name: 'Flickr', priority: 2, isActive: () => false, component: Flickr }
+const exportObject = { name: 'Flickr', priority: 2, isActive: () => true, component: Flickr }
 
 export default exportObject
