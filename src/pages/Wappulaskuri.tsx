@@ -5,7 +5,7 @@ import { apiKeys } from "../apiKeys"
 import { PageProps } from "../types"
 
 const nextWappu = moment(`${moment().year()}-05-01 00:00:00`)
-const wappuDeclared = apiKeys["wappuDeclared"] || false
+const wappuDeclared = apiKeys["wappuDeclared"] === "true" || false
 
 if (nextWappu < moment()) {
   nextWappu.add(1, 'year')
