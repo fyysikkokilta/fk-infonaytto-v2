@@ -6,6 +6,6 @@ node_modules
 history.json
 update.json
 
-apiKeys.ts
+.env
 
 .vscode

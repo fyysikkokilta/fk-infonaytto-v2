@@ -1,8 +1,35 @@
 import lightningcss from 'bun-lightningcss'
 
+if (!Bun.env.GOOGLE_CALENDAR_API_KEY) {
+  throw new Error("Missing Google Calendar API key")
+}
+if (!Bun.env.FLICKR_API_KEY) {
+  throw new Error("Missing Flickr API key")
+}
+if (!Bun.env.SPOTIFY_CLIENT_ID) {
+  throw new Error("Missing Spotify client ID")
+}
+if (!Bun.env.SPOTIFY_CLIENT_SECRET) {
+  throw new Error("Missing Spotify client secret")
+}
+if (!Bun.env.SPOTIFY_REFRESH_TOKEN) {
+  throw new Error("Missing Spotify refresh token")
+}
+if (!Bun.env.WAPPU_DECLARED) {
+  throw new Error("Missing Wappu declared")
+}
+
 const builds = await Bun.build({
   entrypoints: ['./src/index.tsx'],
   target: "browser",
+  define: {
+    'Bun.env.GOOGLE_CALENDAR_API_KEY': JSON.stringify(Bun.env.GOOGLE_CALENDAR_API_KEY),
+    'Bun.env.FLICKR_API_KEY': JSON.stringify(Bun.env.FLICKR_API_KEY),
+    'Bun.env.SPOTIFY_CLIENT_ID': JSON.stringify(Bun.env.SPOTIFY_CLIENT_ID),
+    'Bun.env.SPOTIFY_CLIENT_SECRET': JSON.stringify(Bun.env.SPOTIFY_CLIENT_SECRET),
+    'Bun.env.SPOTIFY_REFRESH_TOKEN': JSON.stringify(Bun.env.SPOTIFY_REFRESH_TOKEN),
+    'Bun.env.WAPPU_DECLARED': JSON.stringify(Bun.env.WAPPU_DECLARED),
+  },
   minify: {
     identifiers: true,
     syntax: true,
@@ -63,11 +90,11 @@ const server = Bun.serve({
       })
     }
 
-    if (pathname === "/api/history" && req.method === "GET") {
-      const historyFile = Bun.file('history.json')
-      return new Response(historyFile.stream(), {
+    if (pathname === "/api/recently-listened" && req.method === "GET") {
+      const recentlyListed = await getRecentlyListened()
+      return new Response(JSON.stringify(recentlyListed), {
         headers: {
-          'Content-Type': historyFile.type,
+          'Content-Type': 'application/json',
         },
       })
     }
@@ -101,6 +128,31 @@ const server = Bun.serve({
 })
 
 console.log(`Listening on ${server.hostname}:${server.port}`)
+
+async function getRecentlyListened() {
+  const tokenResponse = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Basic ${Buffer.from(`${Bun.env.SPOTIFY_CLIENT_ID}:${Bun.env.SPOTIFY_CLIENT_SECRET}`).toString('base64')}`,
+    },
+    body: 'grant_type=refresh_token&refresh_token=' + Bun.env.SPOTIFY_REFRESH_TOKEN,
+  })
+  const { access_token } = await tokenResponse.json()
+  const data = await fetch("https://api.spotify.com/v1/me/player/recently-played?limit=5", {
+    headers: {
+      'Authorization': `Bearer ${access_token}`,
+    },
+  })
+  const recentlyListened = await data.json()
+
+  return recentlyListened.items.map((item: {track: {artists: {name: string}[], name: string, album: {images: {url: string}[]}}, played_at: string}) => ({
+    artist: item.track.artists[0].name,
+    title: item.track.name,
+    timestamp: new Date(item.played_at).getTime(),
+    thumbnail: item.track.album.images[0].url,
+  }))
+}
 
 async function getOpenRestaurants() {
   const date = new Date()

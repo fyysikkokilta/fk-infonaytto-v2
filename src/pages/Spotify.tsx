@@ -17,7 +17,7 @@ const Table = ({ spotifyHistory }: { spotifyHistory: SpotifyHistory[] }) => (
       <tbody>
         {spotifyHistory.map((item, index) => {
           const timeMinutes =
-            (Date.now() / 1000 - item.timestamp) / 60
+            (Date.now() - item.timestamp) / (60*1000)
           const [time, timeUnit] =
             timeMinutes > 60
               ? [Math.floor(timeMinutes / 60), "h"]
@@ -28,7 +28,7 @@ const Table = ({ spotifyHistory }: { spotifyHistory: SpotifyHistory[] }) => (
               <td className={styles.td}>{item.title}</td>
               <td className={styles.td}>
                 <span className={styles.span}>
-                  {time} {timeUnit} ago
+                  {time} {timeUnit} sitten
                 </span>
               </td>
             </tr>
@@ -70,7 +70,7 @@ export const Spotify = ({ showNext }: PageProps) => {
   const [spotifyHistory, setSpotifyHistory] = useState<SpotifyHistory[]>([])
 
   useEffect(() => {
-    fetch("/api/history").then(async response => {
+    fetch("/api/recently-listened").then(async response => {
       setSpotifyHistory(await response.json())
     })
 

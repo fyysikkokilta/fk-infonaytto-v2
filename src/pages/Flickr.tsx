@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import ColorThief from "colorthief"
-import { apiKeys } from "../apiKeys"
 import styles from "../css/flickr.module.css"
 import { PageProps } from '../types'
 
 //Api key needs to be set for this page to work
-const apiKey = apiKeys['Flickr']
+const apiKey = Bun.env.FLICKR_API_KEY
 const userId = "87690636@N05"
 const amountOfAlbumsToFetch = 5
 

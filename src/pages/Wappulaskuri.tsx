@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react"
 import styles from "../css/wappulaskuri.module.css"
 import moment from "moment"
-import { apiKeys } from "../apiKeys"
 import { PageProps } from "../types"
 
 const nextWappu = moment(`${moment().year()}-05-01 00:00:00`)
-const wappuDeclared = apiKeys["wappuDeclared"] === "true" || false
+const wappuDeclared = Bun.env.WAPPU_DECLARED === "true"
 
 if (nextWappu < moment()) {
   nextWappu.add(1, 'year')

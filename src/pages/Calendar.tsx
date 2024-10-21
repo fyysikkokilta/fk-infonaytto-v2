@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react"
 import styles from "../css/calendar.module.css"
-import { apiKeys } from "../apiKeys"
 import { PageProps } from "../types"
 
 // Parameters for api call
-const apiKey = apiKeys['Google calendar'] || ''
+const apiKey = Bun.env.GOOGLE_CALENDAR_API_KEY
 const maxNumberOfEvents = 4
 const timeStamp = new Date().toISOString().substr(0, 10)+'T00:00:00-00:00'
 
