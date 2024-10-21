@@ -23,7 +23,7 @@ The project can also be started as a Docker container using `docker compose -f d
 #### Note about Raspberry Pi configuration
 To make Chromium open automatically on startup, do the following:
 1. Set up Raspbian to automatically log in to the user you want. This can be done with `sudo raspi-config` and select "Desktop Autologin Desktop GUI" from the System options -> Boot / Auto Login. Then, find all instances of the username of the user which was used to run `raspi-config` in the files `/etc/lightdm/lightdm.conf` and `/etc/systemd/system/getty@tty1.service.d/autologin.conf`, and replace them with the user name you want.
-1. Add the line `@chromium-brower --kiosk infonaytto.fyysikkokilta.fi` to `~/.config/lxsession/LXDE-pi/autostart` (note the `@` at the beginning), with the user that will log in automatically.
+1. Add the line `@chromium-browser --kiosk infonaytto.fyysikkokilta.fi` to `~/.config/lxsession/LXDE-pi/autostart` (note the `@` at the beginning), with the user that will log in automatically.
 1. To prevent the raspi from going to sleep, also add the following lines to `autostart` (instructions from [here](https://www.bitpi.co/2015/02/14/prevent-raspberry-pi-from-sleeping/)):
 ```
 @xset s noblank
