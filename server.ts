@@ -82,7 +82,7 @@ const server = Bun.serve({
     }
 
     if (pathname === "/api/update" && req.method === "GET") {
-      const updateFile = Bun.file('update.json')
+      const updateFile = Bun.file('telegram-bot/update.json')
       return new Response(updateFile.stream(), {
         headers: {
           'Content-Type': updateFile.type,

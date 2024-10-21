@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.app
+    ports:
+      - "8069:3010"
+    restart: always
+    volumes:
+      - ./telegram-bot/update.json:/app/telegram-bot/update.json
+    env_file:
+      - .env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+  bot:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.bot
+    restart: always
+    volumes:
+      - ./telegram-bot/update.json:/bot/update.json
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"

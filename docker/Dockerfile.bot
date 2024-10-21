@@ -1,0 +1,9 @@
+FROM python:3.11
+
+WORKDIR /bot
+COPY ./telegram-bot/requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+COPY ./telegram-bot/config.py ./telegram-bot/infonayttobot.py ./
+
+ENTRYPOINT ["python", "infonayttobot.py"]
