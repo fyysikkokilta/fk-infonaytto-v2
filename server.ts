@@ -155,8 +155,7 @@ async function getRecentlyListened() {
 }
 
 async function getOpenRestaurants() {
-  const date = new Date()
-  const timeNow = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+  const timeNow = new Date()
   const todayString = timeNow.toISOString().substring(0,10)
   const restaurantIDs = [1, 5, 3, 45, 50, 51, 52]
   let currentDay = timeNow.getDay()
@@ -170,9 +169,9 @@ async function getOpenRestaurants() {
     const [openHour, openMinute] = open.split(":")
     const [closeHour, closeMinute] = close.split(":")
     const openTime = new Date(timeNow.getTime())
-    openTime.setUTCHours(Number(openHour), Number(openMinute), 0, 0)
+    openTime.setHours(Number(openHour), Number(openMinute), 0, 0)
     const closeTime = new Date(timeNow.getTime())
-    closeTime.setUTCHours(Number(closeHour), Number(closeMinute), 0, 0)
+    closeTime.setHours(Number(closeHour), Number(closeMinute), 0, 0)
     return openTime < timeNow && timeNow < closeTime
   }).map(restaurant => restaurant.id)
 
