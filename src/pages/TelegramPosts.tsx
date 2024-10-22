@@ -24,9 +24,9 @@ export const TelegramPost = ({ showNext }: PageProps) => {
   useEffect(() => {
     fetch("/api/update").then(async response => {
       const responseJson = await response.json() as Response
-      const messageID = responseJson[chatUsername]["latest_message_id"]
-      const percentage = Math.random() * 0.05 + 0.95
-      const tgpost = chatUsername + "/" + Math.floor(messageID*percentage)
+      const latestMessageID = responseJson[chatUsername]["latest_message_id"]
+      const messageToChoose = Math.floor(Math.random() * 100)
+      const tgpost = chatUsername + "/" + Math.max(latestMessageID - messageToChoose, 0)
       const s = document.createElement("script")
       s.type = "text/javascript"
       s.async = true
