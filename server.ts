@@ -19,6 +19,8 @@ if (!Bun.env.WAPPU_DECLARED) {
   throw new Error("Missing Wappu declared")
 }
 
+process.env.TZ = 'Europe/Helsinki'
+
 const builds = await Bun.build({
   entrypoints: ['./src/index.tsx'],
   target: "browser",
