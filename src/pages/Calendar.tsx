@@ -82,7 +82,7 @@ const Calendar = ({ showNext }: PageProps) => {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    let id: NodeJS.Timeout
+    let id: Timer
     Promise.all(calendarIDs.map(cid => {
       const url = `https://www.googleapis.com/calendar/v3/calendars/${cid}/events?key=${apiKey}&timeMin=${timeStamp}&singleEvents=true&orderBy=startTime&maxResults=${maxNumberOfEvents}` 
       return fetch(url).then(async response => {

@@ -71,14 +71,17 @@ export const Ruokalista = ({ showNext }: PageProps) => {
   const [indexOfRestaurantID, setIndexOfRestaurantID] = useState(0)
 
   useEffect(() => {
+    let id: Timer
     fetch('/api/open-restaurants').then(async response => {
       const openRestaurants = await response.json()
       setMenu(openRestaurants)
-      setInterval(() => {
+      id = setInterval(() => {
         setIndexOfRestaurantID(prev => (prev + 1) % openRestaurants.length)
       }, timePerFrame * 1000)
       showNext(Math.max(openRestaurants.length, 1) * timePerFrame * 1000)
     })
+
+    return () => clearInterval(id)
   }, [])
 
   return (
