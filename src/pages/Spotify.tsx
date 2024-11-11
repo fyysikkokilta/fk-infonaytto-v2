@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
-import styles from "../css/spotify.module.css"
-import ColorThief from "colorthief"
-import { PageProps } from "../types"
+import React, { useState, useEffect } from 'react'
+import styles from '../css/spotify.module.css'
+import ColorThief from 'colorthief'
+import { PageProps } from '../types'
 
 type SpotifyHistory = {
   artist: string
@@ -12,16 +12,17 @@ type SpotifyHistory = {
 
 const Table = ({ spotifyHistory }: { spotifyHistory: SpotifyHistory[] }) => (
   <div className={styles.text}>
-    <h1 id="h1" className={styles.h1}>Kiltiksellä soi</h1>
+    <h1 id="h1" className={styles.h1}>
+      Kiltiksellä soi
+    </h1>
     <table id="table" className={styles.table}>
       <tbody>
         {spotifyHistory.map((item, index) => {
-          const timeMinutes =
-            (Date.now() - item.timestamp) / (60*1000)
+          const timeMinutes = (Date.now() - item.timestamp) / (60 * 1000)
           const [time, timeUnit] =
             timeMinutes > 60
-              ? [Math.floor(timeMinutes / 60), "h"]
-              : [Math.floor(timeMinutes), "min"]
+              ? [Math.floor(timeMinutes / 60), 'h']
+              : [Math.floor(timeMinutes), 'min']
           return (
             <tr key={index}>
               <td className={styles.td}>{item.artist}</td>
@@ -42,14 +43,14 @@ const Table = ({ spotifyHistory }: { spotifyHistory: SpotifyHistory[] }) => (
 const BackgroundImage = ({ imageURL }: { imageURL: string }) => (
   <img
     id="albumCover"
-    crossOrigin={"anonymous"}
+    crossOrigin={'anonymous'}
     src={imageURL}
     className={styles.img}
-    alt={"Album cover"}
+    alt={'Album cover'}
     onLoad={() => {
       // When image has loaded, use colorthief to extract colors from image and set page colors accordingly.
       const colorThief = new ColorThief()
-      const img = document.getElementById("albumCover") as HTMLImageElement
+      const img = document.getElementById('albumCover') as HTMLImageElement
       const colors = colorThief.getPalette(img, 2)
 
       const r1 = colors[0][0]
@@ -59,9 +60,11 @@ const BackgroundImage = ({ imageURL }: { imageURL: string }) => (
       const g2 = colors[1][1]
       const b2 = colors[1][2]
 
-      document.getElementById("h1")!.style.color = `rgb(${r2},${g2}, ${b2})`
-      document.getElementById("table")!.style.color = `rgb(${r2},${g2}, ${b2})`
-      document.getElementById("mask")!.style.background = `rgba(${r1},${g1}, ${b1}, 0.87)`
+      document.getElementById('h1')!.style.color = `rgb(${r2},${g2}, ${b2})`
+      document.getElementById('table')!.style.color = `rgb(${r2},${g2}, ${b2})`
+      document.getElementById(
+        'mask'
+      )!.style.background = `rgba(${r1},${g1}, ${b1}, 0.87)`
     }}
   />
 )
@@ -70,7 +73,7 @@ export const Spotify = ({ showNext }: PageProps) => {
   const [spotifyHistory, setSpotifyHistory] = useState<SpotifyHistory[]>([])
 
   useEffect(() => {
-    fetch("/api/recently-listened").then(async response => {
+    fetch('/api/recently-listened').then(async (response) => {
       setSpotifyHistory(await response.json())
     })
 
@@ -86,6 +89,11 @@ export const Spotify = ({ showNext }: PageProps) => {
   )
 }
 
-const exportObject = { name: 'Spotify', priority: 3, isActive: () => true, component: Spotify }
+const exportObject = {
+  name: 'Spotify',
+  priority: 3,
+  isActive: () => true,
+  component: Spotify
+}
 
 export default exportObject

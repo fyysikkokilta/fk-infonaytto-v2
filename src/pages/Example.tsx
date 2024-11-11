@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { PageProps } from '../types'
-//  Each page exports component that is imported in 
+//  Each page exports component that is imported in
 //  Page.js file. Every component should have two function exported:
 //
 //  - name: name of the page. Used for CSS transition class names.
@@ -13,7 +13,7 @@ import { PageProps } from '../types'
 //  It is recommended to use it with useEffect hook to show next page after some time.
 //
 //  Page can also have inner state that allows dynamically changing what is shown.
-//  See other pages for examples. Below is a minimal working example of page componend 
+//  See other pages for examples. Below is a minimal working example of page componend
 //  that is show on the information display.
 
 const Example = ({ showNext }: PageProps) => {
@@ -23,6 +23,11 @@ const Example = ({ showNext }: PageProps) => {
   return <h1>I am page in the information display!</h1>
 }
 
-const exportObject = { name: 'Example', priority: 1, isActive: () => true, component: Example }
+const exportObject = {
+  name: 'Example',
+  priority: 1,
+  isActive: () => true,
+  component: Example
+}
 
 export default exportObject

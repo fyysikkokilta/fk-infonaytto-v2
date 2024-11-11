@@ -1,10 +1,8 @@
-import React, { useEffect } from "react"
-import perjantai from "../images/perjantai.mp4"
-import { PageProps } from "../types"
+import React, { useEffect } from 'react'
+import perjantai from '../images/perjantai.mp4'
+import { PageProps } from '../types'
 
-export const Perjantai = ({ showNext }: PageProps) => 
-// TODO consider showing this upside down, mirrored, as tiled background...
-{
+export const Perjantai = ({ showNext }: PageProps) => {
   useEffect(() => {
     showNext(15000)
   }, [])
@@ -20,8 +18,14 @@ export const Perjantai = ({ showNext }: PageProps) =>
         width="100%"
       />
     </div>
-  )}
+  )
+}
 
-const exportObject = { name: 'Perjantai', priority: 2, isActive: () => new Date().getDay() === 5, component: Perjantai }
+const exportObject = {
+  name: 'Perjantai',
+  priority: 2,
+  isActive: () => new Date().getDay() === 5,
+  component: Perjantai
+}
 
 export default exportObject

@@ -1,10 +1,10 @@
 export type PageProps = {
-    showNext: (timeout: number) => NodeJS.Timeout
+  showNext: (timeout: number) => Timer
 }
 
 export type PageType = {
-    name: string
-    priority: number
-    isActive: () => boolean
-    component: ({ showNext }: PageProps) => React.JSX.Element
+  name: string
+  priority: number
+  isActive: () => boolean
+  component: ({ showNext }: PageProps) => React.JSX.Element
 }

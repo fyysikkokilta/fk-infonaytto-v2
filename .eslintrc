@@ -1,23 +1,23 @@
 {
-    "extends": ["eslint:recommended", "prettier"],
-    "rules": {
-      "react-hooks/exhaustive-deps": "off",
-      "semi": ["error", "never"],
-      "indent": ["error", 2]
-    },
-    "env": {
-      "browser": true,
-      "es2021": true,
-      "node": true
-    },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": { "sourceType": "module" },
-    "overrides": [
-        {
-          "files": ["*.tsx"],
-          "rules": {
-            "no-undef": "off"
-          }
-        }
-      ]
-  }
+  "extends": ["eslint:recommended", "prettier"],
+  "rules": {
+    "react-hooks/exhaustive-deps": "off",
+    "semi": ["error", "never"],
+    "indent": ["error", 2]
+  },
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": { "sourceType": "module" },
+  "overrides": [
+    {
+      "files": ["*.tsx"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ]
+}
