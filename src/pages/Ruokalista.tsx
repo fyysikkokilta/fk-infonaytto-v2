@@ -80,7 +80,10 @@ export const Ruokalista = ({ showNext }: PageProps) => {
       const openRestaurants = await response.json()
       setMenu(openRestaurants)
       id = setInterval(() => {
-        setIndexOfRestaurantID((prev) => (prev + 1) % openRestaurants.length)
+        setIndexOfRestaurantID(
+          // Loop over restaurants. Can't take modulo zero cause it is NaN
+          (prev) => (prev + 1) % (openRestaurants.length || 1)
+        )
       }, timePerFrame * 1000)
     })
 
