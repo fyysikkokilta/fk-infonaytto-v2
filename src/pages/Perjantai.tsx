@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import perjantai from '../images/perjantai.mp4'
 import { PageProps } from '../types'
 
 export const Perjantai = ({ showNext }: PageProps) => {
@@ -13,7 +12,7 @@ export const Perjantai = ({ showNext }: PageProps) => {
         autoPlay
         muted
         loop
-        src={perjantai}
+        src={'/images/perjantai.mp4'}
         itemType="video/mp4"
         width="100%"
       />
