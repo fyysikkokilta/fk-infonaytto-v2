@@ -5,7 +5,6 @@ import { PageProps } from '../types'
 // Parameters for api call
 const apiKey = Bun.env.GOOGLE_CALENDAR_API_KEY
 const maxNumberOfEvents = 4
-const timeStamp = new Date().toISOString().substr(0, 10) + 'T00:00:00-00:00'
 
 const timePerFrame = 7
 const calendars = {
@@ -90,6 +89,8 @@ const Calendar = ({ showNext }: PageProps) => {
     let id: Timer
     Promise.all(
       calendarIDs.map((cid) => {
+        const timeStamp =
+          new Date().toISOString().substring(0, 10) + 'T00:00:00-00:00'
         const url = `https://www.googleapis.com/calendar/v3/calendars/${cid}/events?key=${apiKey}&timeMin=${timeStamp}&singleEvents=true&orderBy=startTime&maxResults=${maxNumberOfEvents}`
         return fetch(url).then(async (response) => {
           const newData = {
