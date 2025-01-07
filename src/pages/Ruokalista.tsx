@@ -30,6 +30,31 @@ const pruneDish = (str: string) => {
   )
 }
 
+const kämäfy = (str: string) => {
+  const wordsToReplace: { [id: string]: string } = {
+    // Longer forms of the word must be first
+    juustoinen: 'kämäinen',
+    juusto: 'kämä',
+    kikherne: 'parhaus',
+    makkara: 'kämä',
+    ohrainen: 'kämä',
+    ohra: 'kämä',
+    'höyrytettyä tummaa riisiä': 'HTR',
+    seiti: 'setä',
+    porkkana: 'lörs',
+    intialainen: 'syömäkelvoton',
+    kasvishöystö: 'kämä'
+  } as const
+
+  let newStr = str
+
+  for (const [key, value] of Object.entries(wordsToReplace)) {
+    newStr = newStr.replace(new RegExp(key, 'g'), value)
+  }
+
+  return newStr
+}
+
 const listDishes = (menu: RestaurantMenu) => {
   const date = new Date()
   const today = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
@@ -48,7 +73,7 @@ const listDishes = (menu: RestaurantMenu) => {
           ) : (
             <div key={index}>
               <p>
-                {dish.title} {dish.properties.join(' ')}
+                {kämäfy(dish.title)} {dish.properties.join(' ')}
               </p>
             </div>
           )
