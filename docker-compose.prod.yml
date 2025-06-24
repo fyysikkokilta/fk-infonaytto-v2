@@ -1,9 +1,6 @@
-version: '3.8'
 services:
   app:
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile.app
+    image: ghcr.io/fyysikkokilta/fk-infonaytto-v2-app:latest
     ports:
       - '127.0.0.1:8069:3010'
     restart: always
@@ -16,9 +13,7 @@ services:
       options:
         max-size: '20m'
   bot:
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile.bot
+    image: ghcr.io/fyysikkokilta/fk-infonaytto-v2-bot:latest
     restart: always
     volumes:
       - ./telegram-bot/update.json:/bot/update.json
