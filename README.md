@@ -17,10 +17,30 @@ Removed features:
 ### Development Setup
 
 1. Clone repo, install bun and dependencies in root and telegram bot with `bun install` and `pip install -r requirements.txt`.
-2. Create a `.env` file using the example `.env.example`
-3. Create the bot config in file `config.py` using the example `example-update.json`
-4. Copy `example-update.json` to `update.json`
-5. After that start the server with `bun run server.ts` and bot with `python infonayttobot.py` and open http://localhost:3010 in browser.
+2. Create a `.env` file using the example `.env.example` and configure all environment variables
+3. Copy `telegram-bot/example-update.json` to `telegram-bot/update.json`
+4. After that start the server with `bun run server.ts` and bot with `python telegram-bot/infonayttobot.py` and open http://localhost:3010 in browser.
+
+### Environment Variables
+
+The application requires the following environment variables to be set in your `.env` file:
+
+**Main Application:**
+
+- `WAPPU_DECLARED` - Whether Wappu is declared (true/false)
+- `GOOGLE_CALENDAR_API_KEY` - Google Calendar API key
+- `FLICKR_API_KEY` - Flickr API key
+- `SPOTIFY_CLIENT_ID` - Spotify client ID
+- `SPOTIFY_CLIENT_SECRET` - Spotify client secret
+- `SPOTIFY_REFRESH_TOKEN` - Spotify refresh token
+
+**Telegram Bot:**
+
+- `TELEGRAM_BOT_TOKEN` - Your Telegram bot token from @BotFather
+- `TELEGRAM_PUBLIC_CHANNEL_ID` - Channel ID where messages will be forwarded (negative integer)
+- `TELEGRAM_ADMIN_USERNAME` - Telegram username of the admin (without @)
+- `TELEGRAM_GROUP_CHATS_TO_FOLLOW` - Comma-separated list of group chat IDs to monitor
+- `OUTPUT_FILENAME` - File path for storing bot data (default: ./update.json)
 
 ## 🐳 Docker CI/CD Setup
 

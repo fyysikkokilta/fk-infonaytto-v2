@@ -3,9 +3,10 @@ node_modules
 # production
 /build
 
-history.json
-update.json
-
 .env
 
 .vscode
+
+__pycache__/
+venv/
+update.json

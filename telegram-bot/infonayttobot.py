@@ -2,7 +2,7 @@
 
 """
 Simple Telegram bot to bridge messages to a channel and to the info screen.
-See README.md for more details. See also config.py and tgpost.html.
+See README.md for more details. Environment variables are used for configuration.
 """
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -16,7 +16,7 @@ from telegram.ext import (
 )
 import logging
 import json
-import config
+import os
 
 # set up logging
 logging.basicConfig(
@@ -25,19 +25,41 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-bot_token = config.bot_token
-assert bot_token, "Bot token missing"
+# Load configuration from environment variables
+bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
+assert bot_token, "TELEGRAM_BOT_TOKEN environment variable is required"
 
-output_filename = config.output_filename
-assert output_filename.endswith("json")
+output_filename = os.getenv("OUTPUT_FILENAME", "./update.json")
+assert output_filename.endswith("json"), "Output filename must end with .json"
 
-public_channel_id = config.public_channel_id
-assert abs(public_channel_id) > 1, "Public channel ID missing."
+public_channel_id = os.getenv("TELEGRAM_PUBLIC_CHANNEL_ID")
+assert public_channel_id, "TELEGRAM_PUBLIC_CHANNEL_ID environment variable is required"
+try:
+    public_channel_id = int(public_channel_id)
+except ValueError:
+    raise ValueError("TELEGRAM_PUBLIC_CHANNEL_ID must be a valid integer")
+assert abs(public_channel_id) > 1, "Public channel ID must be a valid chat ID"
 
-admin_username = config.admin_username
-assert admin_username, "Please provide the user name of an admin."
+admin_username = os.getenv("TELEGRAM_ADMIN_USERNAME")
+assert admin_username, "TELEGRAM_ADMIN_USERNAME environment variable is required"
 
-group_chats_to_follow = config.group_chats_to_follow
+# Parse group chats to follow from environment variable
+group_chats_env = os.getenv("TELEGRAM_GROUP_CHATS_TO_FOLLOW", "")
+group_chats_to_follow = []
+if group_chats_env.strip():
+    try:
+        # Support comma-separated list of chat IDs
+        group_chats_to_follow = [
+            int(chat_id.strip())
+            for chat_id in group_chats_env.split(",")
+            if chat_id.strip()
+        ]
+    except ValueError:
+        raise ValueError(
+            "TELEGRAM_GROUP_CHATS_TO_FOLLOW must be a comma-separated list of integers"
+        )
+
+logger.info(f"Bot configured with {len(group_chats_to_follow)} group chats to follow")
 
 
 def update_output_file(msg):
@@ -224,9 +246,7 @@ async def post_init(application: Application):
 
 
 def main():
-    app = (
-        Application.builder().token(config.bot_token).concurrent_updates(False).build()
-    )
+    app = Application.builder().token(bot_token).concurrent_updates(False).build()
     app.post_init = post_init
     app.run_polling()
 

@@ -17,6 +17,8 @@ services:
     restart: always
     volumes:
       - ./telegram-bot/update.json:/bot/update.json
+    env_file:
+      - .env
     logging:
       driver: 'json-file'
       options:
